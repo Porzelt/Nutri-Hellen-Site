@@ -8,7 +8,7 @@ O objetivo é resolver um problema real de negócio: criar uma presença digital
 
 ## 🛠 Tech Stack & Arquitetura
 
-- **Backend:** Laravel 11 (PHP 8.3)
+- **Backend:** Laravel 12.42.0 (PHP 8.5.0)
 - **Frontend:** Livewire 3 + Tailwind CSS
 - **Banco de Dados:** MySQL 8.0
 - **Infraestrutura:** Docker (via Laravel Sail) sobre WSL2
