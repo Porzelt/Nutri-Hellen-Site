@@ -59,6 +59,16 @@ Implementar a identidade visual "Outono" (Terracota e Verde Musgo) utilizando a 
     1.  Valida e persiste o lead no MySQL (Tabela `leads`) para controle de métricas.
     2.  Redireciona imediatamente para o WhatsApp da nutricionista com mensagem contextualizada (`redirect()->away()`), transferindo a negociação para um canal direto.
 
+### 05. Autenticação Customizada e Área Administrativa 
+**O Desafio:**
+ Criar uma área restrita segura para gestão dos leads sem utilizar "Starter Kits" pesados (como Breeze ou Jetstream) que poderiam sobrescrever a customização CSS (Tailwind v4) já realizada.
+
+A Solução: Implementei um fluxo de autenticação manual utilizando Livewire e os recursos nativos do Laravel (Auth::attempt, Middleware).
+
+Segurança: Proteção das rotas administrativas (/dashboard) via middleware auth. Uso de Seeders para criação controlada do usuário admin, evitando páginas públicas de registro.
+
+Dashboard Interativo: Construção de um painel SPA (Single Page Application) com Livewire, permitindo que a nutricionista marque leads como "Contatados" em tempo real, sem recarregamento de página (AJAX/Fetch implícito).
+
 ---
 
 ## 🚀 Como rodar o projeto localmente
