@@ -1,59 +1,68 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Nutri Hellen - Plataforma Institucional e de Agendamento
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Bem-vindo ao repositório oficial do projeto **Nutri Hellen**. Este sistema está sendo desenvolvido como peça central de portfólio, aplicando práticas modernas de Engenharia de Software com Laravel 11.
 
-## About Laravel
+O objetivo é resolver um problema real de negócio: criar uma presença digital profissional e automatizar o agendamento de consultas nutricionais.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+---
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## 🛠 Tech Stack & Arquitetura
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- **Backend:** Laravel 11 (PHP 8.3)
+- **Frontend:** Livewire 3 + Tailwind CSS
+- **Banco de Dados:** MySQL 8.0
+- **Infraestrutura:** Docker (via Laravel Sail) sobre WSL2
+- **Versionamento:** Gitflow (Main/Develop)
 
-## Learning Laravel
+---
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+## 📖 Diário de Bordo: Decisões Arquiteturais
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+Este projeto serve como um laboratório vivo. Abaixo, documento as decisões técnicas tomadas e os desafios superados.
 
-## Laravel Sponsors
+### 01. Infraestrutura e Isolamento de Ambiente (Docker)
+**O Desafio:**
+Desenvolver múltiplos projetos no mesmo ambiente (WSL2) frequentemente causa conflitos de dependências (versões do PHP) e colisão de portas.
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+**A Solução:**
+Adotei a containerização completa utilizando **Docker** e **Laravel Sail**. Isso isola o ambiente da aplicação, garantindo que ela funcione identicamente em qualquer máquina.
+- **Estratégia de Portas Customizadas:** Como já possuía microsserviços rodando nas portas padrão (80/3306), configurei o `docker-compose` (via `.env`) para expor este projeto em portas dedicadas, evitando conflitos de *binding*:
+  - Aplicação Web: `:8001`
+  - MySQL: `:3307`
+  - Vite (HMR): `:5174`
 
-### Premium Partners
+### 02. Fluxo de Versionamento (Gitflow Adaptado)
+**A Decisão:**
+Para simular um ambiente profissional, aboli commits diretos na branch de produção.
+- **`main`**: Código estável, pronto para deploy. Representa a "verdade" do produto.
+- **`develop`**: Branch de integração onde as funcionalidades são testadas antes do merge.
+Isso garante uma esteira de desenvolvimento segura e organizada.
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+---
 
-## Contributing
+## 🚀 Como rodar o projeto localmente
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+1. **Clone o repositório:**
+   ```bash
+   git clone [https://github.com/SEU-USUARIO/Nutri-Hellen-Site.git](https://github.com/SEU-USUARIO/Nutri-Hellen-Site.git)
+   cd Nutri-Hellen-Site
 
-## Code of Conduct
+2. **Configure o ambiente:**
+Copie o arquivo de exemplo e configure as variáveis de ambiente.
+    ```bash
+    cp .env.example .env
+    Nota: Certifique-se de configurar APP_PORT=8001 e FORWARD_DB_PORT=3307 no .env se houver conflitos de porta.
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+3. **Inicie os Conrainers**
+    ```bash
+    ./vendor/bin/sail up -d
 
-## Security Vulnerabilities
+4. **Instale as dependências e rode as migrações**
+    ```bash
+    ./vendor/bin/sail composer install
+    ./vendor/bin/sail npm install
+    ./vendor/bin/sail artisan migrate
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+5. **Acesse**
+O projeto estará rodando em: http://localhost:8001
 
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
