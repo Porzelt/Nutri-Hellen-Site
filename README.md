@@ -48,6 +48,17 @@ Desafio: O utilitário npx apresentou falhas de resolução de binário dentro d
 
 Solução: Executei a inicialização do Tailwind invocando diretamente o binário local (./node_modules/.bin/tailwindcss), contornando a falha de path do ambiente virtualizado.
 
+### 04. Identidade Visual (Tailwind v4) e Captura de Leads
+**O Desafio:**
+Implementar a identidade visual "Outono" (Terracota e Verde Musgo) utilizando a versão mais recente do framework (**Tailwind CSS v4**) e criar um fluxo de agendamento sem fricção (sem login).
+
+**Decisões Técnicas:**
+* **Configuração CSS-Native:** Adotei a nova arquitetura do Tailwind v4, migrando a configuração do antigo arquivo JS (`tailwind.config.js`) para variáveis de tema diretamente no CSS (`@theme`). Isso eliminou arquivos de configuração legados e simplificou a pipeline de build.
+* **Design System Semântico:** Defini tokens como `--color-brand-primary` e `--color-brand-secondary`. Isso desacopla a lógica de cores do HTML, permitindo mudanças globais de marca editando apenas o CSS.
+* **Estratégia "Zero-Login":** Para maximizar a conversão de pacientes, optei por um formulário stateless que:
+    1.  Valida e persiste o lead no MySQL (Tabela `leads`) para controle de métricas.
+    2.  Redireciona imediatamente para o WhatsApp da nutricionista com mensagem contextualizada (`redirect()->away()`), transferindo a negociação para um canal direto.
+
 ---
 
 ## 🚀 Como rodar o projeto localmente

@@ -1,15 +1,12 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-@import 'tailwindcss';
-
-@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
-@source '../../storage/framework/views/*.php';
-@source '../**/*.blade.php';
-@source '../**/*.js';
+@import "tailwindcss";
 
 @theme {
-    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
-        'Segoe UI Symbol', 'Noto Color Emoji';
+    /* Definindo as cores da Nutri Hellen direto no CSS */
+    --color-brand-light: #FDF6E3;
+    --color-brand-primary: #C05621;
+    --color-brand-secondary: #5F6F3A;
+    --color-brand-dark: #2D3748;
+
+    /* Definindo a fonte padrão */
+    --font-sans: 'Figtree', sans-serif;
 }
