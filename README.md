@@ -38,6 +38,16 @@ Para simular um ambiente profissional, aboli commits diretos na branch de produ�
 - **`develop`**: Branch de integração onde as funcionalidades são testadas antes do merge.
 Isso garante uma esteira de desenvolvimento segura e organizada.
 
+### 03. Stack de Frontend e Compilação de Assets 
+**A Decisão:**
+Para manter a agilidade no desenvolvimento da interface, optei pela "TALL Stack" (Tailwind, Alpine - implícito no Livewire, Laravel, Livewire).
+
+Configuração Técnica: Configurei o Vite para processar os arquivos do Tailwind CSS em tempo real (HMR).
+
+Desafio: O utilitário npx apresentou falhas de resolução de binário dentro do container Docker.
+
+Solução: Executei a inicialização do Tailwind invocando diretamente o binário local (./node_modules/.bin/tailwindcss), contornando a falha de path do ambiente virtualizado.
+
 ---
 
 ## 🚀 Como rodar o projeto localmente
