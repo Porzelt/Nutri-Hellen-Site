@@ -76,6 +76,18 @@ Proteção das rotas administrativas (/dashboard) via middleware auth. Uso de Se
 **Dashboard Interativo:**
 Construção de um painel SPA (Single Page Application) com Livewire, permitindo que a nutricionista marque leads como "Contatados" em tempo real, sem recarregamento de página (AJAX/Fetch implícito).
 
+### 06. Qualidade de Software e Testes Automatizados
+**O Desafio:**
+Garantir a confiabilidade do fluxo crítico de negócios (Agendamento) e da segurança (Proteção do Dashboard) em um ambiente de desenvolvimento instável (Laravel 12 Alpha + PHP 8.5).
+
+**A Solução:**
+Implementei testes automatizados de integração (Feature Tests) cobrindo os cenários de sucesso e falha.
+* **Pivot Estratégico (Tooling):** Inicialmente optei pelo *Pest PHP*, mas devido a conflitos de dependência com as versões *bleeding edge* do framework, migrei para o **PHPUnit** nativo. Isso garantiu a execução dos testes sem bloquear o avanço do projeto.
+* **Cobertura de Testes:**
+    1.  **Smoke Test:** Validação de carregamento da Landing Page (Status 200).
+    2.  **Segurança:** Tentativa de acesso não autorizado ao `/dashboard` (deve redirecionar para login).
+    3.  **Fluxo de Negócio:** Simulação completa de um paciente preenchendo o componente Livewire, verificando a persistência correta na tabela `leads` do MySQL.
+
 ---
 
 ## 🚀 Como rodar o projeto localmente
