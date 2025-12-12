@@ -44,7 +44,7 @@ Isso garante uma esteira de desenvolvimento segura e organizada.
 
 1. **Clone o repositório:**
    ```bash
-   git clone [https://github.com/SEU-USUARIO/Nutri-Hellen-Site.git](https://github.com/SEU-USUARIO/Nutri-Hellen-Site.git)
+   git clone https://github.com/Porzelt/Nutri-Hellen-Site.git
    cd Nutri-Hellen-Site
 
 2. **Configure o ambiente:**
@@ -53,7 +53,7 @@ Copie o arquivo de exemplo e configure as variáveis de ambiente.
     cp .env.example .env
     Nota: Certifique-se de configurar APP_PORT=8001 e FORWARD_DB_PORT=3307 no .env se houver conflitos de porta.
 
-3. **Inicie os Conrainers**
+3. **Inicie os Containers**
     ```bash
     ./vendor/bin/sail up -d
 
