@@ -63,11 +63,18 @@ Implementar a identidade visual "Outono" (Terracota e Verde Musgo) utilizando a 
 **O Desafio:**
  Criar uma área restrita segura para gestão dos leads sem utilizar "Starter Kits" pesados (como Breeze ou Jetstream) que poderiam sobrescrever a customização CSS (Tailwind v4) já realizada.
 
-A Solução: Implementei um fluxo de autenticação manual utilizando Livewire e os recursos nativos do Laravel (Auth::attempt, Middleware).
+**A Solução:**
+**A Solução:**
+Implementei um fluxo de autenticação manual utilizando **Livewire** e os recursos nativos do Laravel (`Auth::attempt`, `Middleware`).
+* **Segurança:** Proteção das rotas administrativas (`/dashboard`) via middleware `auth`. Uso de *Seeders* para criação controlada do usuário admin, evitando páginas públicas de registro.
+* **Dashboard Interativo:** Construção de um painel SPA (Single Page Application) com Livewire, permitindo que a nutricionista marque leads como "Contatados" em tempo real, sem recarregamento de página.
+* **UX Discreta:** Implementação de um ponto de acesso administrativo oculto no rodapé, visível apenas como um ícone de cadeado para visitantes, mas que se transforma em um botão de acesso rápido quando o usuário está autenticado.
 
-Segurança: Proteção das rotas administrativas (/dashboard) via middleware auth. Uso de Seeders para criação controlada do usuário admin, evitando páginas públicas de registro.
+**Segurança:**
+Proteção das rotas administrativas (/dashboard) via middleware auth. Uso de Seeders para criação controlada do usuário admin, evitando páginas públicas de registro.
 
-Dashboard Interativo: Construção de um painel SPA (Single Page Application) com Livewire, permitindo que a nutricionista marque leads como "Contatados" em tempo real, sem recarregamento de página (AJAX/Fetch implícito).
+**Dashboard Interativo:**
+Construção de um painel SPA (Single Page Application) com Livewire, permitindo que a nutricionista marque leads como "Contatados" em tempo real, sem recarregamento de página (AJAX/Fetch implícito).
 
 ---
 

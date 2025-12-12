@@ -74,8 +74,23 @@
         </div>
     </section>
 
-    <footer class="bg-gray-800 text-white py-8 text-center text-sm">
-        <p>&copy; {{ date('Y') }} Nutri Hellen. Todos os direitos reservados.</p>
-        <p class="mt-2 opacity-50">Desenvolvido com 🖤 por Henrique Porzelt</p>
+    <footer class="bg-gray-800 text-white py-10 text-center text-sm relative">
+        <div class="container mx-auto px-6">
+            <p class="font-medium">&copy; {{ date('Y') }} Nutri Hellen. Todos os direitos reservados.</p>
+            <p class="mt-2 text-gray-400">Desenvolvido com 🖤 por Henrique Porzelt</p>
+
+            <div class="mt-8 border-t border-gray-700 pt-8 flex justify-center">
+                @auth
+                    <a href="{{ route('dashboard') }}" class="flex items-center gap-2 text-brand-primary hover:text-white transition text-xs font-bold uppercase tracking-wider">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z"></path></svg>
+                        Acessar Dashboard
+                    </a>
+                @else
+                    <a href="{{ route('login') }}" class="text-gray-600 hover:text-gray-400 transition" title="Área Restrita">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+                    </a>
+                @endauth
+            </div>
+        </div>
     </footer>
 </div>
