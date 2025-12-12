@@ -75,7 +75,7 @@
     </section>
 
     <footer class="bg-gray-800 text-white py-10 text-center text-sm relative">
-        <div class="container mx-auto px-6">
+        <div class="container mx-auto px-6 ">
             <p class="font-medium">&copy; {{ date('Y') }} Nutri Hellen. Todos os direitos reservados.</p>
             <p class="mt-2 text-gray-400">Desenvolvido com 🖤 por Henrique Porzelt</p>
 
