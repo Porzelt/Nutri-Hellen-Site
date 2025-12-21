@@ -24,7 +24,7 @@
                 <label for="password" class="block text-sm font-medium text-gray-700 mb-1">Senha</label>
                 <input wire:model="password" id="password" type="password" autocomplete="current-password" required 
                     class="appearance-none block w-full px-3 py-3 border border-gray-300 rounded-lg placeholder-gray-400 focus:outline-none focus:ring-brand-primary focus:border-brand-primary sm:text-sm shadow-sm transition" 
-                    placeholder="Sua senha secreta">
+                    placeholder="senha">
                 @error('password') <span class="text-red-500 text-xs mt-1">{{ $message }}</span> @enderror
             </div>
 

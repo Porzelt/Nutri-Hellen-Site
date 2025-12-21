@@ -33,7 +33,7 @@ class AgendamentoForm extends Component
 
         // 3. Gerar Link do WhatsApp
         
-        $numeroNutri = '5511946914384'; 
+        $numeroNutri = '5511967261034';
         
         $mensagem = urlencode("Olá! Me chamo {$this->nome}. Gostaria de agendar uma consulta. Minha preferência é: {$this->data_preferencia}.");
         
