@@ -88,6 +88,20 @@ Implementei testes automatizados de integração (Feature Tests) cobrindo os cen
     2.  **Segurança:** Tentativa de acesso não autorizado ao `/dashboard` (deve redirecionar para login).
     3.  **Fluxo de Negócio:** Simulação completa de um paciente preenchendo o componente Livewire, verificando a persistência correta na tabela `leads` do MySQL.
 
+### 07. Refinamento Visual, SEO e Validação (Release v1.5)
+**O Desafio:**
+Elevar o nível do MVP para um produto final de mercado, validado pela cliente real (Nutricionista), focando em conversão e identidade visual.
+
+**A Solução:**
+* **Copywriting & UX:** Reescrita total dos textos aplicando gatilhos mentais (autoridade e empatia) e criação da seção "Como Funciona" para reduzir a fricção de entrada.
+* **UI Design & Assets:**
+    * Integração das fotos profissionais com ajustes finos de CSS (`object-top` no Tailwind) para garantir enquadramento perfeito do rosto em qualquer tela.
+    * Implementação de botão flutuante (Floating Action Button) do WhatsApp com ícone SVG limpo para conversão direta.
+* **SEO Técnico:** Correção da renderização da tag `<title>`, sobrepondo as configurações padrão do Laravel (`app.name`) para garantir indexação correta no Google ("Nutricionista Hellen...").
+* **Validação:** Aprovação final da stakeholder (cliente).
+
+**Status:** Projeto PRONTO para Deploy (Go Live).
+
 ---
 
 ## 🚀 Como rodar o projeto localmente

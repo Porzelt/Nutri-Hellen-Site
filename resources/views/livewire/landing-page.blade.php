@@ -2,19 +2,23 @@
     <section class="relative py-20 lg:py-32 overflow-hidden">
         <div class="container mx-auto px-6 flex flex-col-reverse lg:flex-row items-center gap-12">
             <div class="lg:w-1/2 text-center lg:text-left">
-                <h1 class="text-4xl lg:text-5xl font-bold text-brand-secondary leading-tight mb-6">
-                    Nutrição com afeto e <span class="text-brand-primary">estratégia.</span>
+                <h1 class="text-4xl md:text-6xl font-bold text-gray-900 mb-6">
+                    Emagreça e recupere sua saúde <span class="text-green-600">comendo comida de verdade.</span>
                 </h1>
-                <p class="text-lg text-gray-600 mb-8">
-                    Atingir seus objetivos de saúde não precisa ser uma guerra contra a comida.
+
+                <p class="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
+                    Um plano alimentar desenhado para a sua rotina, sem dietas malucas e com acompanhamento próximo.
                 </p>
-                <a href="#agendamento" class="inline-block bg-brand-primary hover:bg-orange-700 text-white font-semibold px-8 py-4 rounded-lg transition shadow-lg hover:-translate-y-1">
-                    Agendar Consulta
+
+                <a href="#agendamento" class="bg-green-600 text-white px-8 py-4 rounded-full font-bold text-lg hover:bg-green-700 transition shadow-lg inline-block">
+                    Quero Agendar Minha Avaliação
                 </a>
             </div>
             <div class="lg:w-1/2">
-                <div class="bg-brand-secondary/20 border-2 border-brand-secondary border-dashed rounded-tr-[4rem] rounded-bl-[4rem] w-full h-64 lg:h-96 flex items-center justify-center text-brand-secondary font-bold shadow-xl">
-                    FOTO PRINCIPAL
+                <div class="relative lg:col-span-5 lg:-mr-8 xl:absolute xl:inset-0 xl:left-1/2 xl:mr-0">
+                    <img class="aspect-[3/2] w-full bg-gray-50 object-cover object-top lg:absolute lg:inset-0 lg:aspect-auto lg:h-full"
+                        src="/img/home-hellen.png"
+                        alt="Nutricionista Hellen">
                 </div>
             </div>
         </div>
@@ -23,56 +27,78 @@
     <section id="sobre" class="py-20 bg-white">
         <div class="container mx-auto px-6 flex flex-col lg:flex-row items-center gap-12">
             <div class="lg:w-1/2">
-                <div class="bg-brand-primary/10 rounded-xl w-full h-80 flex items-center justify-center text-brand-primary font-bold">
-                    FOTO CONSULTÓRIO
+                <div class="relative">
+                    <div class="absolute -top-4 -left-4 w-full h-full bg-green-100 rounded-2xl -z-10"></div>
+
+                    <img src="/img/sobre-hellen.png"
+                        alt="Nutricionista Hellen sorrindo no consultório"
+                        class="rounded-2xl shadow-lg w-full h-auto object-cover transform hover:scale-[1.02] transition duration-500">
                 </div>
             </div>
             <div class="lg:w-1/2">
-                <h2 class="text-3xl font-bold text-brand-secondary mb-6">Olá, sou a Hellen</h2>
-                <div class="space-y-4 text-gray-600 leading-relaxed">
-                    <p>
-                        Acredito na nutrição que acolhe. Minha paleta de trabalho envolve ciência e comportamento.
+                <h2 class="text-3xl font-bold text-gray-800 mb-4">Olá, sou a Hellen.</h2>
+                <div class="prose text-gray-600 leading-relaxed">
+                    <p class="mb-4">
+                        Eu acredito na <strong>Nutrição para a Vida Real</strong>. Sei que sua rotina é corrida e que comer bem precisa ser prático.
                     </p>
                     <p>
-                        Especialista em saúde da mulher e emagrecimento, meu consultório é um espaço seguro para você fazer as pazes com o espelho e com o prato.
+                        Minha missão não é apenas mudar seu corpo, é organizar sua relação com a comida. Seja para tratar uma condição de saúde (como diabetes ou SOP), emagrecer ou cuidar da sua gestação, meu consultório é um espaço de estratégia e acolhimento.
                     </p>
                 </div>
             </div>
         </div>
     </section>
 
-    <section class="py-20 bg-brand-light">
-        <div class="container mx-auto px-6">
-            <h2 class="text-3xl font-bold text-center text-brand-secondary mb-12">Especialidades</h2>
+    <section class="py-16 bg-green-50">
+        <div class="container mx-auto px-4 text-center">
+            <h2 class="text-3xl font-bold text-gray-800 mb-12">Como funciona o acompanhamento?</h2>
 
             <div class="grid md:grid-cols-3 gap-8">
-                <div class="bg-white p-8 rounded-xl shadow-sm hover:shadow-md transition border-t-4 border-brand-primary">
-                    <div class="text-brand-primary text-4xl mb-4">🍎</div>
-                    <h3 class="text-xl font-bold mb-3 text-gray-800">Reeducação</h3>
-                    <p class="text-gray-600 text-sm">Autonomia para fazer boas escolhas em qualquer lugar.</p>
+                <div class="bg-white p-8 rounded-2xl shadow-sm hover:shadow-md transition">
+                    <div class="w-16 h-16 bg-green-100 text-green-600 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path>
+                        </svg>
+                    </div>
+                    <h3 class="font-bold text-xl mb-2">Anamnese Detalhada</h3>
+                    <p class="text-gray-600">Entendo sua rotina, seus gostos e suas dificuldades atuais.</p>
                 </div>
-                <div class="bg-white p-8 rounded-xl shadow-sm hover:shadow-md transition border-t-4 border-brand-secondary">
-                    <div class="text-brand-secondary text-4xl mb-4">⚖️</div>
-                    <h3 class="text-xl font-bold mb-3 text-gray-800">Emagrecimento</h3>
-                    <p class="text-gray-600 text-sm">Estratégias metabólicas sem dietas restritivas.</p>
+
+                <div class="bg-white p-8 rounded-2xl shadow-sm hover:shadow-md transition">
+                    <div class="w-16 h-16 bg-green-100 text-green-600 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3"></path>
+                        </svg>
+                    </div>
+                    <h3 class="font-bold text-xl mb-2">Avaliação Corporal</h3>
+                    <p class="text-gray-600">Bioimpedância e medidas para traçar metas reais.</p>
                 </div>
-                <div class="bg-white p-8 rounded-xl shadow-sm hover:shadow-md transition border-t-4 border-brand-primary">
-                    <div class="text-brand-primary text-4xl mb-4">🤰</div>
-                    <h3 class="text-xl font-bold mb-3 text-gray-800">Materno Infantil</h3>
-                    <p class="text-gray-600 text-sm">Nutrição programada da gestação à infância.</p>
+
+                <div class="bg-white p-8 rounded-2xl shadow-sm hover:shadow-md transition">
+                    <div class="w-16 h-16 bg-green-100 text-green-600 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="font-bold text-xl mb-2">Plano Personalizado</h3>
+                    <p class="text-gray-600">Nada de dieta de gaveta. Um plano feito para você.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <section id="agendamento" class="py-20 bg-white">
-        <div class="container mx-auto px-6 max-w-2xl text-center">
-            <h2 class="text-3xl font-bold text-brand-secondary mb-6">Vamos cuidar de você?</h2>
-            <p class="text-gray-600 mb-8">Preencha seus dados. Eu mesma entrarei em contato pelo WhatsApp.</p>
+    <div id="agendamento" class="py-16 bg-white">
+        <div class="container mx-auto px-4 max-w-2xl">
+            <div class="text-center mb-10">
+                <h2 class="text-3xl font-bold text-gray-900 mb-4">Dê o primeiro passo agora.</h2>
+                <p class="text-gray-600">
+                    Preencha abaixo e eu entrarei em contato pelo WhatsApp para encontrar o melhor horário para você.
+                </p>
+            </div>
 
-            <livewire:agendamento-form />
+            @livewire('agendamento-form')
         </div>
-    </section>
+    </div>
 
     <footer class="bg-gray-800 text-white py-10 text-center text-sm relative">
         <div class="container mx-auto px-6 ">
@@ -81,20 +107,23 @@
 
             <div class="mt-8 border-t border-gray-700 pt-8 flex justify-center">
                 @auth
-                    <a href="{{ route('dashboard') }}" class="flex items-center gap-2 text-brand-primary hover:text-white transition text-xs font-bold uppercase tracking-wider">
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z"></path></svg>
-                        Acessar Dashboard
-                    </a>
+                <a href="{{ route('dashboard') }}" class="flex items-center gap-2 text-brand-primary hover:text-white transition text-xs font-bold uppercase tracking-wider">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z"></path>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z"></path>
+                    </svg>
+                    Acessar Dashboard
+                </a>
                 @else
-                    <a href="{{ route('login') }}" class="text-gray-600 hover:text-gray-400 transition" title="Área Restrita">
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
-                    </a>
+                <a href="{{ route('login') }}" class="text-gray-600 hover:text-gray-400 transition" title="Área Restrita">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+                    </svg>
+                </a>
                 @endauth
             </div>
         </div>
     </footer>
-<<<<<<< Updated upstream
-=======
     <a href="https://wa.me/5511967261034?text=Olá,%20gostaria%20de%20saber%20mais%20sobre%20a%20consulta."
         target="_blank"
         class="fixed bottom-6 right-6 bg-green-500 text-white p-4 rounded-full shadow-2xl hover:bg-green-600 transition z-50 flex items-center justify-center group">
@@ -105,5 +134,4 @@
 
         <span class="hidden group-hover:block ml-2 font-bold">Falar no WhatsApp</span>
     </a>
->>>>>>> Stashed changes
 </div>
