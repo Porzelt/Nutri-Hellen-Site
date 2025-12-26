@@ -1,21 +1,19 @@
-# Usa uma imagem profissional pronta para Laravel (PHP 8.3 + Nginx + Otimizações)
 FROM serversideup/php:8.3-fpm-nginx
 
-# Muda para root para instalar o Node.js (necessário para o Tailwind)
 USER root
+# Instala Node.js e NPM (necessário para o Frontend)
 RUN apt-get update && apt-get install -y nodejs npm
 
-# Volta para o usuário padrão de segurança
-USER webuser
+# Define o usuário padrão do servidor web (Correção aqui!)
+USER www-data
 
-# Define o diretório de trabalho
 WORKDIR /var/www/html
 
-# Copia os arquivos do projeto com as permissões certas
-COPY --chown=webuser:webuser . .
+# Copia os arquivos já dando permissão para o usuário correto
+COPY --chown=www-data:www-data . .
 
-# Instala as dependências do PHP (Backend)
+# Instala dependências do PHP
 RUN composer install --no-dev --optimize-autoloader --no-interaction
 
-# Instala as dependências do JS e compila o Tailwind (Frontend)
+# Instala dependências do JS e constrói o Frontend
 RUN npm install && npm run build
