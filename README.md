@@ -102,6 +102,35 @@ Elevar o nível do MVP para um produto final de mercado, validado pela cliente r
 
 **Status:** Projeto PRONTO para Deploy (Go Live).
 
+### 08. Deploy em Produção e Orquestração (Coolify & Docker)
+* **O Desafio:** Levar a aplicação do ambiente local (Sail/WSL2) para um servidor de produção (VPS) mantendo o baixo custo, mas com autonomia de CI/CD (Integração e Entrega Contínuas). A Escolha: Utilizei a DigitalOcean como provedor de infraestrutura e o Coolify como orquestrador (PaaS self-hosted), evitando a complexidade de configurar servidores Linux manualmente do zero.
+
+* **Obstáculos e Soluções de Engenharia:**
+
+**Gerenciamento de Recursos (Swap):**
+
+* Problema: O servidor de 2GB de RAM sofria crashes silenciosos durante o processo de build (compilação do NPM/Vite), que é intensivo em memória.
+
+* Solução: Implementação de uma Swap Memory de 2GB via terminal Linux, dobrando a capacidade "virtual" do servidor e permitindo que o processo de build finalizasse sem estourar a memória (OOM Kill).
+
+* **Estratégia de Build (Nixpacks vs. Dockerfile):**
+
+* Problema: O construtor automático do Coolify (Nixpacks) gerou conflitos na configuração do Nginx (duplicate location "/") e inconsistências entre a versão do PHP instalada (8.3) e a exigida pelo composer.lock (8.4).
+
+* Decisão Arquitetural: Abandonei a "mágica" automática e assumi o controle total criando um Dockerfile de Produção.
+
+Stack: Baseado na imagem profissional serversideup/php:8.4-fpm-nginx, que já traz otimizações de segurança, PHP 8.4 e Nginx pré-configurado para Laravel. Isso eliminou a ambiguidade do ambiente.
+
+Banco de Dados e Networking:
+
+* Problema 1: A versão mais recente do MySQL (8.4) removeu o plugin mysql_native_password, quebrando a autenticação do driver padrão do Laravel.
+
+* Problema 2: O container da aplicação não conseguia resolver o nome do host do banco de dados devido a latências na propagação do DNS interno do Docker (php_network_getaddresses).
+
+* Solução 1: Migração estratégica para MariaDB, garantindo compatibilidade nativa e simplificada com o ecossistema Laravel.
+
+* Solução 2: Conexão via IP Interno Estático. Ao invés de depender do nome do container, configurei o DB_HOST diretamente com o IP da rede interna do Docker, eliminando falhas de resolução de nomes e garantindo conexão imediata.
+
 ---
 
 ## 🚀 Como rodar o projeto localmente
