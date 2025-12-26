@@ -124,7 +124,7 @@
             </div>
         </div>
     </footer>
-    <a href="https://wa.me/5511999999999?text=Olá,%20gostaria%20de%20saber%20mais%20sobre%20a%20consulta."
+    <a href="https://wa.me/5511967261034?text=Olá,%20gostaria%20de%20saber%20mais%20sobre%20a%20consulta."
         target="_blank"
         class="fixed bottom-6 right-6 bg-green-500 text-white p-4 rounded-full shadow-2xl hover:bg-green-600 transition z-50 flex items-center justify-center group">
 

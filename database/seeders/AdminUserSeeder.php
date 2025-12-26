@@ -15,7 +15,7 @@ class AdminUserSeeder extends Seeder
             User::create([
                 'name' => 'Hellen Nutricionista',
                 'email' => 'henrique.porzeltneto@gmail.com',
-                'password' => Hash::make('1234'), // Lembre-se de mudar isso em produção!
+                'password' => Hash::make('Ben@196011'), // Lembre-se de mudar isso em produção!
             ]);
         }
     }
