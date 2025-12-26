@@ -1,5 +1,5 @@
 # Usa uma imagem profissional pronta para Laravel (PHP 8.3 + Nginx + Otimizações)
-FROM serversideup/php:8.3-fpm-nginx:v3.1
+FROM serversideup/php:8.3-fpm-nginx
 
 # Muda para root para instalar o Node.js (necessário para o Tailwind)
 USER root
