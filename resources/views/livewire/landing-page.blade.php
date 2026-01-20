@@ -15,9 +15,9 @@
                 </a>
             </div>
             <div class="lg:w-1/2">
-                <div class="relative lg:col-span-5 lg:-mr-8 xl:absolute xl:inset-0 xl:left-1/2 xl:mr-0">
-                    <img class="aspect-[3/2] w-full bg-gray-50 object-cover object-top lg:absolute lg:inset-0 lg:aspect-auto lg:h-full"
-                        src="/img/home-hellen.png"
+                <div class="relative flex items-center justify-center bg-brand-light lg:col-span-5 lg:-mr-8 xl:absolute xl:inset-0 xl:left-1/2 xl:mr-0">
+                    <img class="h-64 w-auto object-contain lg:h-96"
+                        src="/img/Logo sem crn_sem_pesos.png"
                         alt="Nutricionista Hellen">
                 </div>
             </div>
