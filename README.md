@@ -129,7 +129,7 @@ Banco de Dados e Networking:
 
 * Solução 1: Migração estratégica para MariaDB, garantindo compatibilidade nativa e simplificada com o ecossistema Laravel.
 
-* Solução 2: Conexão via IP Interno Estático. Ao invés de depender do nome do container, configurei o DB_HOST diretamente com o IP da rede interna do Docker, eliminando falhas de resolução de nomes e garantindo conexão imediata. 
+* Solução 2: Conexão via IP Interno Estático. Ao invés de depender do nome do container, configurei o DB_HOST diretamente com o IP da rede interna do Docker, eliminando falhas de resolução dos nomes e garantindo conexão imediata. 
 
 ---
 
