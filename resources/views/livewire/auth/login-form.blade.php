@@ -1,6 +1,15 @@
 <div class="min-h-screen flex items-center justify-center bg-brand-light py-12 px-4 sm:px-6 lg:px-8">
     <div class="max-w-md w-full space-y-8 bg-white p-10 rounded-2xl shadow-xl border-t-4 border-brand-primary">
         
+        <div>
+            <a href="{{ route('home') }}" class="flex items-center gap-1.5 text-sm text-gray-400 hover:text-brand-secondary transition w-fit">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+                </svg>
+                Voltar ao site
+            </a>
+        </div>
+
         <div class="text-center">
             <h2 class="mt-6 text-3xl font-extrabold text-brand-secondary">
                 Área Restrita
