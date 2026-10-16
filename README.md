@@ -1,24 +1,45 @@
-# Nutri Hellen - Plataforma Institucional e de Agendamento
+# Nutri Hellen — Site institucional e agendamento de consultas
 
-Bem-vindo ao repositório oficial do projeto **Nutri Hellen**. Este sistema está sendo desenvolvido como peça central de portfólio, aplicando práticas modernas de Engenharia de Software com Laravel 11.
+**Em produção:** [nutrihellenfatima.com.br](https://nutrihellenfatima.com.br) · cliente real (nutricionista, CRN-3)
 
-O objetivo é resolver um problema real de negócio: criar uma presença digital profissional e automatizar o agendamento de consultas nutricionais.
+![Página inicial do site](docs/screenshot-home.jpg)
 
----
+Landing page com captação de pacientes sem login e painel administrativo de leads, do levantamento com a cliente até o deploy em VPS.
 
-## 🛠 Tech Stack & Arquitetura
+| | |
+|---|---|
+| **Backend** | Laravel 12 · PHP 8.4 |
+| **Frontend** | Livewire 3 · Tailwind CSS v4 (tokens de marca no CSS via `@theme`) |
+| **Banco** | MariaDB (local: MySQL via Sail) |
+| **Testes** | PHPUnit, testes de feature para o fluxo de agendamento e a proteção do painel |
+| **Infra** | Docker/Laravel Sail (WSL2) · Dockerfile de produção (`serversideup/php` + Nginx) · Coolify em VPS DigitalOcean com deploy por webhook |
 
-- **Backend:** Laravel 12.42.0 (PHP 8.5.0)
-- **Frontend:** Livewire 3 + Tailwind CSS
-- **Banco de Dados:** MySQL 8.0
-- **Infraestrutura:** Docker (via Laravel Sail) sobre WSL2
-- **Versionamento:** Gitflow (Main/Develop)
+## Destaques
 
----
+- **Agendamento sem fricção:** o formulário Livewire valida, grava o lead e redireciona para o WhatsApp da nutricionista com uma mensagem pronta.
+- **Painel administrativo** protegido por autenticação própria, sem starter kit: marca leads como contatados em tempo real.
+- **Deploy de verdade, com problemas reais resolvidos:** OOM no build (resolvido com swap), conflito entre o Nixpacks e o Nginx (substituído por Dockerfile próprio), plugin de autenticação removido no MySQL 8.4 (migração para MariaDB) e resolução de DNS entre containers.
+- **SEO e conversão:** título indexável, botão flutuante de WhatsApp e textos validados pela cliente.
 
-## 📖 Diário de Bordo: Decisões Arquiteturais
+## Como rodar localmente
 
-Este projeto serve como um laboratório vivo. Abaixo, documento as decisões técnicas tomadas e os desafios superados.
+```bash
+git clone https://github.com/Porzelt/Nutri-Hellen-Site.git
+cd Nutri-Hellen-Site
+cp .env.example .env          # se houver conflito de portas: APP_PORT=8001 e FORWARD_DB_PORT=3307
+./vendor/bin/sail up -d
+./vendor/bin/sail composer install
+./vendor/bin/sail npm install && ./vendor/bin/sail npm run build
+./vendor/bin/sail artisan migrate
+./vendor/bin/sail artisan test
+```
+
+Acesse em http://localhost:8001
+
+## 📖 Diário de bordo: decisões de arquitetura
+
+<details>
+<summary>Os desafios e as decisões técnicas de cada etapa (clique para expandir)</summary>
 
 ### 01. Infraestrutura e Isolamento de Ambiente (Docker)
 **O Desafio:**
@@ -64,17 +85,10 @@ Implementar a identidade visual "Outono" (Terracota e Verde Musgo) utilizando a 
  Criar uma área restrita segura para gestão dos leads sem utilizar "Starter Kits" pesados (como Breeze ou Jetstream) que poderiam sobrescrever a customização CSS (Tailwind v4) já realizada.
 
 **A Solução:**
-**A Solução:**
 Implementei um fluxo de autenticação manual utilizando **Livewire** e os recursos nativos do Laravel (`Auth::attempt`, `Middleware`).
 * **Segurança:** Proteção das rotas administrativas (`/dashboard`) via middleware `auth`. Uso de *Seeders* para criação controlada do usuário admin, evitando páginas públicas de registro.
 * **Dashboard Interativo:** Construção de um painel SPA (Single Page Application) com Livewire, permitindo que a nutricionista marque leads como "Contatados" em tempo real, sem recarregamento de página.
 * **UX Discreta:** Implementação de um ponto de acesso administrativo oculto no rodapé, visível apenas como um ícone de cadeado para visitantes, mas que se transforma em um botão de acesso rápido quando o usuário está autenticado.
-
-**Segurança:**
-Proteção das rotas administrativas (/dashboard) via middleware auth. Uso de Seeders para criação controlada do usuário admin, evitando páginas públicas de registro.
-
-**Dashboard Interativo:**
-Construção de um painel SPA (Single Page Application) com Livewire, permitindo que a nutricionista marque leads como "Contatados" em tempo real, sem recarregamento de página (AJAX/Fetch implícito).
 
 ### 06. Qualidade de Software e Testes Automatizados
 **O Desafio:**
@@ -129,33 +143,10 @@ Banco de Dados e Networking:
 
 * Solução 1: Migração estratégica para MariaDB, garantindo compatibilidade nativa e simplificada com o ecossistema Laravel.
 
-* Solução 2: Conexão via IP Interno Estático. Ao invés de depender do nome do container, configurei o DB_HOST diretamente com o IP da rede interna do Docker, eliminando falhas de resolução dos nomes e garantindo conexão imediata. 
+* Solução 2: Conexão via IP Interno Estático. Ao invés de depender do nome do container, configurei o DB_HOST diretamente com o IP da rede interna do Docker, eliminando falhas de resolução dos nomes e garantindo conexão imediata.
+
+</details>
 
 ---
 
-## 🚀 Como rodar o projeto localmente
-
-1. **Clone o repositório:**
-   ```bash
-   git clone https://github.com/Porzelt/Nutri-Hellen-Site.git
-   cd Nutri-Hellen-Site
-
-2. **Configure o ambiente:**
-Copie o arquivo de exemplo e configure as variáveis de ambiente.
-    ```bash
-    cp .env.example .env
-    Nota: Certifique-se de configurar APP_PORT=8001 e FORWARD_DB_PORT=3307 no .env se houver conflitos de porta.
-
-3. **Inicie os Containers**
-    ```bash
-    ./vendor/bin/sail up -d
-
-4. **Instale as dependências e rode as migrações**
-    ```bash
-    ./vendor/bin/sail composer install
-    ./vendor/bin/sail npm install
-    ./vendor/bin/sail artisan migrate
-
-5. **Acesse**
-O projeto estará rodando em: http://localhost:8001
-
+Desenvolvido por **Henrique Porzelt Neto** · [LinkedIn](https://linkedin.com/in/henriqueporzelt) · [GitHub](https://github.com/Porzelt)
