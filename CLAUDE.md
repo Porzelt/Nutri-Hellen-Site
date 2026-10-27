@@ -34,10 +34,7 @@ Acesso: http://localhost:8001. Portas no `.env`: `APP_PORT=8001`, `VITE_PORT=517
 - `npx` falhava dentro do container; usar `./node_modules/.bin/<bin>` se precisar.
 - Arquivos `*:Zone.Identifier` aparecem ao copiar do Windows para o WSL: não commitar.
 - Teste de smoke (`tests/Feature/PacienteFlowTest.php`) verifica um texto do hero; atualizar se a copy mudar.
-- `database/seeders/AdminUserSeeder.php` tem credencial fixa no código (histórico público). Ver pendência abaixo.
-
-## Pendências conhecidas
-- Mover a credencial do `AdminUserSeeder` para variáveis de ambiente e trocar a senha do admin em produção.
+- O admin vem do `AdminUserSeeder` com `ADMIN_EMAIL`/`ADMIN_PASSWORD` do `.env` (sem eles, o seeder não cria nada). A senha antiga ficou no histórico público do git: considerá-la vazada.
 
 ## Próxima funcionalidade (aguardando contrato)
 Formulário de anamnese com link único por paciente + API autenticada para o app local da Hellen. **Não implementar antes de existir `INTEGRACAO-CONSULTORIO.md` na raiz.** Dados de pacientes ficam no servidor só até a importação (ou 7 dias).
