@@ -20,7 +20,7 @@ class PacienteFlowTest extends TestCase
         $response = $this->get('/');
 
         $response->assertStatus(200);
-        $response->assertSee('Nutrição com afeto'); // Verifica texto chave
+        $response->assertSee('comendo comida de verdade'); // Verifica texto chave
     }
 
     /**

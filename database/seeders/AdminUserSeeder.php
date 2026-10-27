@@ -10,12 +10,21 @@ class AdminUserSeeder extends Seeder
 {
     public function run(): void
     {
+        $email = config('admin.email');
+        $password = config('admin.password');
+
+        if (blank($email) || blank($password)) {
+            $this->command?->warn('ADMIN_EMAIL/ADMIN_PASSWORD não definidos no .env: admin não criado.');
+
+            return;
+        }
+
         // Verifica se o usuário já existe para não duplicar se rodar de novo
-        if (!User::where('email', 'henrique.porzeltneto@gmail.com')->exists()) {
+        if (!User::where('email', $email)->exists()) {
             User::create([
-                'name' => 'Hellen Nutricionista',
-                'email' => 'henrique.porzeltneto@gmail.com',
-                'password' => Hash::make('Ben@196011'), // Lembre-se de mudar isso em produção!
+                'name' => config('admin.name'),
+                'email' => $email,
+                'password' => Hash::make($password),
             ]);
         }
     }
