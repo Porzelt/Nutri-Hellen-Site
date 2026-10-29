@@ -3,7 +3,7 @@
 Pendências do site, em ordem de execução. Marcar `[x]` ao concluir. Repositório público: nada de IPs, senhas ou detalhes de infraestrutura sensíveis aqui.
 
 ## Infraestrutura (Coolify / VPS)
-- [ ] Backup diário do banco no Coolify, retenção de 7 dias (alinhado à retenção do contrato)
+- [x] Backup diário do banco no Coolify, retenção de 7 dias (alinhado à retenção do contrato)
 - [ ] Ligar OPcache (`PHP_OPCACHE_ENABLE=1`) e redeploy
 - [ ] Ligar `AUTORUN_ENABLED=true` (optimize + migrate a cada deploy) e redeploy
 - [ ] Firewall da VPS na DigitalOcean: liberar só SSH, HTTP e HTTPS (Henrique)
