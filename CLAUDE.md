@@ -26,6 +26,7 @@ Acesso: http://localhost:8001. Portas no `.env`: `APP_PORT=8001`, `VITE_PORT=517
 - **Push na `main` dispara deploy automático** (webhook GitHub → Coolify v4 numa VPS, atrás de Traefik com SSL). Só fazer merge/push na `main` com aprovação explícita do Henrique.
 - Antes de commitar: `git fetch` e alinhar `develop` com `origin/main` (já houve commits direto na main, ex.: README).
 - Build de produção é o `Dockerfile` da raiz (Node 20 + `npm run build` dentro da imagem). A VPS tem só 2 GB de RAM + swap: evitar dependências pesadas de build.
+- Produção roda com `PHP_OPCACHE_ENABLE=1` e `AUTORUN_ENABLED=true` (imagem serversideup): a cada deploy roda `storage:link`, `optimize` (cache de config, rotas e views) e `migrate --force`. Toda migration que chega na `main` roda direto no banco de produção. Com o cache de config, usar `env()` só dentro de `config/`.
 - Acompanhar deploys/logs pelo painel do Coolify no navegador (Projeto → aplicação → Deployments / Logs). Não há CLI/token configurado localmente; se for preciso usar a API, o token fica fora do repositório (ex.: variável de ambiente no `~/.bashrc` do WSL), nunca no chat.
 
 ## Armadilhas
