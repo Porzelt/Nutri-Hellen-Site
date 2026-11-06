@@ -5,6 +5,8 @@
     $card = 'bg-white rounded-2xl shadow-sm p-5 space-y-5';
     $erro = fn ($campo) => $errors->has($campo) ? '<p class="text-red-600 text-sm mt-1">'.e($errors->first($campo)).'</p>' : '';
     $total = count($etapas);
+    // Dica curta abaixo da pergunta (P::DICAS)
+    $dica = fn ($chave) => isset(P::DICAS[$chave]) ? '<p class="mt-1 mb-2 flex gap-1 text-xs text-gray-500"><span aria-hidden="true">💡</span><span>'.e(P::DICAS[$chave]).'</span></p>' : '';
 @endphp
 
 <div>
@@ -210,15 +212,17 @@
                             <label class="{{ $label }}" for="sono_horas">Horas de sono por noite</label>
                             <input id="sono_horas" type="text" inputmode="decimal" placeholder="ex.: 7" wire:model="f.sono_horas" class="{{ $input }}">
                             {!! $erro('f.sono_horas') !!}
+                            {!! $dica('sono_horas') !!}
                         </div>
                         <div>
                             <label class="{{ $label }}" for="sono_horario">Horário de sono</label>
                             <input id="sono_horario" type="text" placeholder="ex.: 23h às 7h" wire:model="f.sono_horario" class="{{ $input }}">
                         </div>
                     </div>
-                    @foreach ([['sono_reparador', 'O sono é reparador?', P::SONO_REPARADOR], ['estresse', 'Nível de estresse', P::ESTRESSE]] as [$campo, $titulo, $opcoes])
+                    @foreach ([['sono_reparador', 'O sono é reparador?', P::SONO_REPARADOR], ['estresse', 'Nível de estresse', P::ESTRESSE], ['hidratacao', 'Quantos litros de água bebe por dia?', P::HIDRATACAO]] as [$campo, $titulo, $opcoes])
                         <div>
                             <span class="{{ $label }}">{{ $titulo }}</span>
+                            {!! $dica($campo) !!}
                             <div class="grid grid-cols-2 gap-2">
                                 @foreach ($opcoes as $opcao)
                                     <label class="flex items-center gap-2 rounded-xl border border-gray-300 px-3 py-3 text-sm has-[:checked]:border-[var(--cor-marca)] has-[:checked]:bg-[var(--cor-marca)]/10">
@@ -230,11 +234,8 @@
                         </div>
                     @endforeach
                     <div>
-                        <label class="{{ $label }}" for="hidratacao">Quanta água bebe por dia?</label>
-                        <input id="hidratacao" type="text" placeholder="ex.: 1,5 L" wire:model="f.hidratacao" class="{{ $input }}">
-                    </div>
-                    <div>
                         <label class="{{ $label }}" for="intestino">Como funciona o intestino?</label>
+                        {!! $dica('intestino') !!}
                         <input id="intestino" type="text" placeholder="ex.: 1 vez ao dia" wire:model="f.intestino" class="{{ $input }}">
                     </div>
                 @endif
@@ -244,6 +245,7 @@
                     @foreach ([['alergias', 'Tem alergia ou intolerância alimentar?', 'Quais?'], ['aversoes', 'Tem alimentos que não come de jeito nenhum?', 'Quais?']] as [$campo, $titulo, $pergunta])
                         <div>
                             <span class="{{ $label }}">{{ $titulo }}</span>
+                            {!! $dica($campo) !!}
                             <div class="grid grid-cols-2 gap-2">
                                 @foreach (P::SIM_NAO as $opcao)
                                     <label class="flex items-center gap-2 rounded-xl border border-gray-300 px-4 py-3 has-[:checked]:border-[var(--cor-marca)] has-[:checked]:bg-[var(--cor-marca)]/10">
@@ -261,6 +263,7 @@
                     @foreach ([['padrao_alimentar', 'Padrão alimentar', P::PADRAO_ALIMENTAR], ['orcamento', 'Orçamento para alimentação', P::ORCAMENTO], ['culinaria', 'Habilidade na cozinha', P::CULINARIA]] as [$campo, $titulo, $opcoes])
                         <div>
                             <span class="{{ $label }}">{{ $titulo }}</span>
+                            {!! $dica($campo) !!}
                             <div class="grid grid-cols-2 gap-2">
                                 @foreach ($opcoes as $opcao)
                                     <label class="flex items-center gap-2 rounded-xl border border-gray-300 px-3 py-3 text-sm has-[:checked]:border-[var(--cor-marca)] has-[:checked]:bg-[var(--cor-marca)]/10">
@@ -273,6 +276,7 @@
                     @endforeach
                     <div>
                         <span class="{{ $label }}">Compulsão ou “beliscos” (ex.: doce à noite)</span>
+                        {!! $dica('compulsao') !!}
                         <label class="flex items-center gap-2 text-sm text-gray-700 mb-2">
                             <input type="checkbox" wire:model.live="f.compulsao_nao_tem" class="h-5 w-5 accent-[var(--cor-marca)]"> Não tenho
                         </label>
@@ -286,15 +290,22 @@
                 {{-- 5. Saúde --}}
                 @if ($etapa === 5)
                     <div>
-                        <span class="{{ $label }}">Tem alguma destas condições? (marque todas que tiver)</span>
-                        <div class="space-y-2">
-                            @foreach (P::CONDICOES as $opcao)
-                                <label class="flex items-start gap-2 text-sm text-gray-700">
-                                    <input type="checkbox" wire:model="f.condicoes" value="{{ $opcao }}" class="mt-0.5 h-5 w-5 accent-[var(--cor-marca)]"> {{ $opcao }}
-                                </label>
-                            @endforeach
-                        </div>
-                        <input type="text" placeholder="Outras condições" wire:model="f.condicoes_outras" class="{{ $input }} mt-3">
+                        <span class="{{ $label }}">Tem algum problema de saúde? (marque todos que tiver)</span>
+                        {!! $dica('condicoes') !!}
+                        <label class="flex items-center gap-2 rounded-xl border border-gray-300 px-4 py-3 mb-3 text-sm font-medium text-gray-800 has-[:checked]:border-[var(--cor-marca)] has-[:checked]:bg-[var(--cor-marca)]/10">
+                            <input type="checkbox" wire:model.live="f.sem_condicoes" class="h-5 w-5 accent-[var(--cor-marca)]"> Não tenho problemas de saúde
+                        </label>
+                        @unless ($f['sem_condicoes'])
+                            <div class="space-y-2">
+                                @foreach (P::CONDICOES as $opcao)
+                                    <label class="flex items-start gap-2 text-sm text-gray-700">
+                                        <input type="checkbox" wire:model="f.condicoes" value="{{ $opcao }}" class="mt-0.5 h-5 w-5 accent-[var(--cor-marca)]"> {{ $opcao }}
+                                    </label>
+                                @endforeach
+                            </div>
+                            <input type="text" placeholder="Outros problemas de saúde" wire:model="f.condicoes_outras" class="{{ $input }} mt-3">
+                        @endunless
+                        {!! $erro('f.condicoes') !!}
                     </div>
 
                     @foreach ([['medicamentos', 'medicamentos_nao_toma', 'Medicamentos', 'Não tomo medicamentos'], ['suplementos', 'suplementos_nao_usa', 'Suplementos e vitaminas', 'Não uso suplementos']] as [$lista, $nenhum, $titulo, $textoNenhum])
@@ -330,15 +341,27 @@
                     @endforeach
 
                     <div>
-                        <span class="{{ $label }}">Histórico na família</span>
-                        <div class="space-y-2">
-                            @foreach (P::HISTORICO_FAMILIAR as $opcao)
-                                <label class="flex items-center gap-2 text-sm text-gray-700">
-                                    <input type="checkbox" wire:model="f.historico_familiar" value="{{ $opcao }}" class="h-5 w-5 accent-[var(--cor-marca)]"> {{ $opcao }}
+                        <span class="{{ $label }}">Há doenças na sua família?</span>
+                        {!! $dica('historico_familiar') !!}
+                        <div class="space-y-2 mb-3">
+                            @foreach (P::HISTORICO_FAMILIAR_SITUACAO as $valor => $rotulo)
+                                <label class="flex items-center gap-2 rounded-xl border border-gray-300 px-4 py-3 text-sm has-[:checked]:border-[var(--cor-marca)] has-[:checked]:bg-[var(--cor-marca)]/10">
+                                    <input type="radio" wire:model.live="f.historico_familiar_situacao" value="{{ $valor }}" class="accent-[var(--cor-marca)]"> {{ $rotulo }}
                                 </label>
                             @endforeach
                         </div>
-                        <input type="text" placeholder="Quem? (ex.: mãe, avô)" wire:model="f.historico_familiar_obs" class="{{ $input }} mt-3">
+                        {!! $erro('f.historico_familiar_situacao') !!}
+                        @if ($f['historico_familiar_situacao'] === 'tem')
+                            <div class="space-y-2">
+                                @foreach (P::HISTORICO_FAMILIAR as $opcao)
+                                    <label class="flex items-center gap-2 text-sm text-gray-700">
+                                        <input type="checkbox" wire:model="f.historico_familiar" value="{{ $opcao }}" class="h-5 w-5 accent-[var(--cor-marca)]"> {{ $opcao }}
+                                    </label>
+                                @endforeach
+                            </div>
+                            <input type="text" placeholder="Quem? (ex.: mãe, avô)" wire:model="f.historico_familiar_obs" class="{{ $input }} mt-3">
+                            {!! $erro('f.historico_familiar') !!}
+                        @endif
                     </div>
                 @endif
 
@@ -348,6 +371,7 @@
                     @foreach (['exames' => ['Exames de sangue ou outros exames', 'Não tenho exames recentes'], 'bio' => ['Bioimpedância', 'Não tenho bioimpedância'], 'outros' => ['Outros documentos (ex.: pedido médico, dieta anterior)', 'Não tenho outros documentos']] as $cat => [$titulo, $textoNao])
                         <div class="rounded-xl border border-gray-200 p-4 space-y-3" wire:key="cat-{{ $cat }}">
                             <span class="{{ $label }}">{{ $titulo }}</span>
+                            {!! $dica($cat) !!}
 
                             @foreach ($arquivos->get($cat, []) as $arq)
                                 <div wire:key="arq-{{ $arq->id }}" class="flex items-center justify-between gap-2 rounded-lg bg-gray-50 px-3 py-2 text-sm">

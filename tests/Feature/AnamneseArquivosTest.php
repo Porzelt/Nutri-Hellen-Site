@@ -156,6 +156,7 @@ class AnamneseArquivosTest extends TestCase
             'objetivo' => 'Emagrecimento', 'metas_nao_tem' => true, 'atividade_nao_pratica' => true,
             'sono_reparador' => 'Sim', 'estresse' => 'Baixo', 'alergias' => 'Não', 'aversoes' => 'Não', 'padrao_alimentar' => 'Onívoro',
             'compulsao_nao_tem' => true, 'orcamento' => 'Médio', 'culinaria' => 'Boa',
+            'hidratacao' => '1 a 2 litros', 'sem_condicoes' => true, 'historico_familiar_situacao' => 'nao_tem',
             'medicamentos_nao_toma' => true, 'suplementos_nao_usa' => true,
             'sem_bio' => true, 'sem_outros' => true, 'observacoes_sem' => true,
         ]);

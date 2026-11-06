@@ -36,6 +36,30 @@ class PrimeiraConsulta
 
     public const HISTORICO_FAMILIAR = ['Diabetes', 'Colesterol', 'Hipertensão', 'Doença cardíaca precoce', 'Câncer'];
 
+    /** Histórico familiar: há doenças, não há, ou o paciente não sabe (contrato, mudança 2). */
+    public const HISTORICO_FAMILIAR_SITUACAO = ['tem' => 'Sim, há casos na família', 'nao_tem' => 'Não há doenças na família', 'nao_sabe' => 'Não sei'];
+
+    /** Água por dia, em litros (contrato, mudança 2: opções fixas no campo de texto "hidratacao"). */
+    public const HIDRATACAO = ['Menos de 1 litro', '1 a 2 litros', '2 a 3 litros', 'Mais de 3 litros'];
+
+    /** Dicas curtas mostradas abaixo das perguntas que costumam gerar dúvida. */
+    public const DICAS = [
+        'padrao_alimentar' => 'Onívoro: come de tudo, inclusive carnes. Vegetariano: não come carnes, mas pode comer ovos e leite. Vegano: não come nada de origem animal.',
+        'sono_reparador' => 'Reparador é acordar descansado, com energia para o dia.',
+        'estresse' => 'Pense em como você se sentiu na maior parte das últimas semanas.',
+        'hidratacao' => 'Conte só a água pura (1 copo comum tem cerca de 200 ml; 5 copos = 1 litro).',
+        'intestino' => 'Quantas vezes vai ao banheiro (evacuar) por dia ou por semana.',
+        'orcamento' => 'Quanto você consegue gastar com comida, comparado ao que gasta hoje.',
+        'culinaria' => 'Nenhuma: não cozinha. Básica: arroz, feijão, ovo. Boa: faz várias receitas. Ótima: cozinha de tudo.',
+        'compulsao' => 'Vontade forte de comer, mesmo sem fome, ou comer muito de uma vez.',
+        'aversoes' => 'Alimentos que você não come de jeito nenhum, por não gostar.',
+        'alergias' => 'Ex.: lactose, glúten, frutos do mar, amendoim.',
+        'condicoes' => 'Marque só o que um médico já confirmou.',
+        'historico_familiar' => 'Pais, irmãos e avós.',
+        'bio' => 'Exame que mede gordura, músculo e água do corpo (aquela balança com eletrodos).',
+        'sono_horas' => 'Use números como 7 ou 7,5.',
+    ];
+
     /** Etapas depois do consentimento (a etapa 0 é o consentimento). */
     public const ETAPAS = [
         1 => 'Sobre você',
@@ -68,10 +92,10 @@ class PrimeiraConsulta
             'aversoes' => '', 'aversoes_texto' => '', 'compulsao_nao_tem' => false, 'compulsao_texto' => '',
             'orcamento' => '', 'culinaria' => '',
 
-            'condicoes' => [], 'condicoes_outras' => '',
+            'sem_condicoes' => false, 'condicoes' => [], 'condicoes_outras' => '',
             'medicamentos_nao_toma' => false, 'medicamentos' => [self::linhaItem()],
             'suplementos_nao_usa' => false, 'suplementos' => [self::linhaItem()],
-            'historico_familiar' => [], 'historico_familiar_obs' => '',
+            'historico_familiar_situacao' => '', 'historico_familiar' => [], 'historico_familiar_obs' => '',
 
             'sem_exames' => false, 'sem_bio' => false, 'sem_outros' => false,
 
@@ -127,7 +151,7 @@ class PrimeiraConsulta
                 'f.sono_horario' => $curto,
                 'f.sono_reparador' => ['required', Rule::in(self::SONO_REPARADOR)],
                 'f.estresse' => ['required', Rule::in(self::ESTRESSE)],
-                'f.hidratacao' => $curto,
+                'f.hidratacao' => ['required', Rule::in(self::HIDRATACAO)],
                 'f.intestino' => $curto,
             ],
 
@@ -143,10 +167,12 @@ class PrimeiraConsulta
             ],
 
             5 => array_merge([
-                'f.condicoes' => ['array'],
+                // Marca condições (ou escreve outras) OU "não tenho problemas de saúde"
+                'f.condicoes' => $f['sem_condicoes'] ? ['array'] : ['array', 'required_without:f.condicoes_outras'],
                 'f.condicoes.*' => [Rule::in(self::CONDICOES)],
                 'f.condicoes_outras' => $texto,
-                'f.historico_familiar' => ['array'],
+                'f.historico_familiar_situacao' => ['required', Rule::in(array_keys(self::HISTORICO_FAMILIAR_SITUACAO))],
+                'f.historico_familiar' => $f['historico_familiar_situacao'] === 'tem' ? ['array', 'required_without:f.historico_familiar_obs'] : ['array'],
                 'f.historico_familiar.*' => [Rule::in(self::HISTORICO_FAMILIAR)],
                 'f.historico_familiar_obs' => $texto,
             ], self::regrasItens('medicamentos', $f['medicamentos_nao_toma']),
@@ -195,6 +221,10 @@ class PrimeiraConsulta
             'f.suplementos.*.nome.required' => 'Diga o nome (ou marque que não usa).',
             'f.metas_texto.required' => 'Escreva suas metas ou marque "não tenho".',
             'f.compulsao_texto.required' => 'Descreva ou marque "não tenho".',
+            'f.condicoes.required_without' => 'Marque as condições que tem ou "Não tenho problemas de saúde".',
+            'f.historico_familiar.required_without' => 'Marque quais doenças há na família (ou escreva em "quem").',
+            'f.historico_familiar_situacao.required' => 'Responda se há doenças na família.',
+            'f.hidratacao.required' => 'Escolha quanto de água bebe por dia.',
             'f.observacoes_texto.required' => 'Escreva aqui ou marque "não tenho observações".',
             'f.nascimento.required' => 'Informe a data de nascimento ou marque para informar só a idade.',
             'f.idade_informada.required' => 'Informe a sua idade.',
@@ -283,12 +313,15 @@ class PrimeiraConsulta
                 'culinaria' => $f['culinaria'],
             ],
             'saude' => [
-                'condicoes' => array_values(array_intersect(self::CONDICOES, $f['condicoes'])),
+                'sem_condicoes' => (bool) $f['sem_condicoes'],
+                'condicoes' => $f['sem_condicoes'] ? [] : array_values(array_intersect(self::CONDICOES, $f['condicoes'])),
                 'condicoes_outras' => trim((string) $f['condicoes_outras']),
                 'medicamentos' => ['nao_toma' => (bool) $f['medicamentos_nao_toma'], 'lista' => $f['medicamentos_nao_toma'] ? [] : $itens($f['medicamentos'])],
                 'suplementos' => ['nao_usa' => (bool) $f['suplementos_nao_usa'], 'lista' => $f['suplementos_nao_usa'] ? [] : $itens($f['suplementos'])],
-                'historico_familiar' => array_values(array_intersect(self::HISTORICO_FAMILIAR, $f['historico_familiar'])),
-                'historico_familiar_obs' => trim((string) $f['historico_familiar_obs']),
+                'historico_familiar_nao_tem' => $f['historico_familiar_situacao'] === 'nao_tem',
+                'historico_familiar_nao_sabe' => $f['historico_familiar_situacao'] === 'nao_sabe',
+                'historico_familiar' => $f['historico_familiar_situacao'] === 'tem' ? array_values(array_intersect(self::HISTORICO_FAMILIAR, $f['historico_familiar'])) : [],
+                'historico_familiar_obs' => $f['historico_familiar_situacao'] === 'tem' ? trim((string) $f['historico_familiar_obs']) : '',
             ],
             'observacoes' => ['sem_observacoes' => (bool) $f['observacoes_sem'], 'texto' => $f['observacoes_sem'] ? null : $t($f['observacoes_texto'])],
             'arquivos' => [

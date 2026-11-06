@@ -257,3 +257,14 @@ APP LOCAL (sessão das consultas):
 - `expira_em` é o fim do dia (23:59:59, horário de Brasília) do último dia de validade, como no exemplo da seção 5
 - O link continua utilizável até o envio do formulário ou até `expira_em`, o que vier primeiro (rascunho incluído)
 - Compatível: não muda campos nem a versão do esquema
+
+### 2. "Não tenho" em saúde e histórico familiar; água em faixas (site, 2026-11-06, pedida pelo Henrique)
+
+Mudança compatível: só acrescenta campos opcionais. `versao_esquema` passa a `1.1`.
+
+- `saude.sem_condicoes` (booleano, novo): o paciente marcou "Não tenho problemas de saúde". Com `true`, `condicoes` vem vazia e `condicoes_outras` vazio. Com `false`, há pelo menos uma condição marcada ou `condicoes_outras` preenchido
+- `saude.historico_familiar_nao_tem` (booleano, novo): "Não há doenças na família". Com `true`, `historico_familiar` vem vazia e `historico_familiar_obs` vazio
+- `saude.historico_familiar_nao_sabe` (booleano, novo): "Não sei". Mesma regra de lista vazia
+- Os dois indicadores de histórico nunca vêm `true` juntos. Com ambos `false`, o paciente marcou pelo menos uma doença ou escreveu em `historico_familiar_obs`
+- `sono_habitos.hidratacao` continua texto, mas passa a vir sempre de uma destas opções: `Menos de 1 litro` | `1 a 2 litros` | `2 a 3 litros` | `Mais de 3 litros`
+- Para o app local: tratar a ausência dos campos novos (resposta 1.0) como `false`

@@ -38,13 +38,13 @@ class AnamnesePacienteTest extends TestCase
             2 => ['profissao' => 'Auxiliar administrativo', 'horario_trabalho' => 'Seg a sex, 8h às 18h', 'objetivo' => 'Emagrecimento',
                 'metas_texto' => 'melhorar a disposição', 'atividades' => [['tipo' => 'caminhada', 'frequencia' => '3x/semana', 'duracao' => '30 min']]],
             3 => ['sono_horas' => '7', 'sono_horario' => '00h às 07h', 'sono_reparador' => 'Às vezes', 'estresse' => 'Muito alto',
-                'hidratacao' => '1,5 L por dia', 'intestino' => '1 vez ao dia'],
+                'hidratacao' => '1 a 2 litros', 'intestino' => '1 vez ao dia'],
             4 => ['alergias' => 'Não', 'padrao_alimentar' => 'Onívoro', 'aversoes' => 'Sim', 'aversoes_texto' => 'jiló e melão',
                 'compulsao_texto' => 'doce à noite', 'orcamento' => 'Baixo', 'culinaria' => 'Básica'],
             5 => ['condicoes' => ['Dislipidemia (colesterol / triglicerídeos)'],
                 'medicamentos' => [['nome' => 'levotiroxina', 'dose' => '', 'horario' => '', 'nao_informado' => true]],
                 'suplementos' => [['nome' => 'ácido fólico', 'dose' => '5 mg', 'horario' => 'manhã', 'nao_informado' => false]],
-                'historico_familiar' => ['Diabetes', 'Hipertensão'], 'historico_familiar_obs' => 'mãe'],
+                'historico_familiar_situacao' => 'tem', 'historico_familiar' => ['Diabetes', 'Hipertensão'], 'historico_familiar_obs' => 'mãe'],
             6 => ['sem_exames' => true, 'sem_bio' => true, 'sem_outros' => true],
             7 => ['observacoes_texto' => 'Trabalho em pé o dia todo'],
         ];
@@ -132,10 +132,73 @@ class AnamnesePacienteTest extends TestCase
         $this->assertSame([['nome' => 'levotiroxina', 'dose' => null, 'horario' => null, 'nao_informado' => true]], $d['saude']['medicamentos']['lista']);
         $this->assertSame('5 mg', $d['saude']['suplementos']['lista'][0]['dose']);
         $this->assertSame(['Diabetes', 'Hipertensão'], $d['saude']['historico_familiar']);
+        $this->assertFalse($d['saude']['historico_familiar_nao_tem']);
+        $this->assertFalse($d['saude']['historico_familiar_nao_sabe']);
+        $this->assertFalse($d['saude']['sem_condicoes']);
+        $this->assertSame('1 a 2 litros', $d['sono_habitos']['hidratacao']);
         $this->assertSame(['sem_observacoes' => false, 'texto' => 'Trabalho em pé o dia todo'], $d['observacoes']);
 
         // Link deixa de funcionar depois do envio
         $this->get($convite->url())->assertSee('Link indisponível');
+    }
+
+    public function test_saude_exige_condicao_ou_nao_tenho_e_situacao_da_familia(): void
+    {
+        $convite = Convite::criar('primeira');
+        Resposta::create([
+            'convite_id' => $convite->id, 'tipo' => 'primeira', 'etapa' => 5,
+            'consentimento_versao' => 'x', 'consentimento_aceito_em' => now(),
+            'dados' => ['rascunho' => \App\Anamnese\PrimeiraConsulta::estadoInicial()],
+        ]);
+
+        $t = $this->abrir($convite)
+            ->set('f.medicamentos_nao_toma', true)->set('f.suplementos_nao_usa', true)
+            ->call('avancar')
+            ->assertHasErrors(['f.condicoes' => 'required_without', 'f.historico_familiar_situacao' => 'required'])
+            ->assertSet('etapa', 5);
+
+        // "Sim, há casos" sem marcar nenhuma doença
+        $t->set('f.sem_condicoes', true)->set('f.historico_familiar_situacao', 'tem')
+            ->call('avancar')
+            ->assertHasErrors(['f.historico_familiar' => 'required_without']);
+
+        $t->set('f.historico_familiar_situacao', 'nao_tem')
+            ->call('avancar')
+            ->assertHasNoErrors()
+            ->assertSet('etapa', 6);
+    }
+
+    public function test_agua_so_aceita_as_opcoes_em_litros(): void
+    {
+        $convite = Convite::criar('primeira');
+        Resposta::create([
+            'convite_id' => $convite->id, 'tipo' => 'primeira', 'etapa' => 3,
+            'consentimento_versao' => 'x', 'consentimento_aceito_em' => now(),
+            'dados' => ['rascunho' => \App\Anamnese\PrimeiraConsulta::estadoInicial()],
+        ]);
+
+        $this->abrir($convite)
+            ->assertSee('Quantos litros de água bebe por dia?')
+            ->set('f.sono_reparador', 'Sim')->set('f.estresse', 'Baixo')
+            ->set('f.hidratacao', '1')
+            ->call('avancar')
+            ->assertHasErrors(['f.hidratacao' => 'in'])
+            ->set('f.hidratacao', 'Mais de 3 litros')
+            ->call('avancar')
+            ->assertHasNoErrors()
+            ->assertSet('etapa', 4);
+    }
+
+    public function test_mostra_dica_de_padrao_alimentar(): void
+    {
+        $convite = Convite::criar('primeira');
+        Resposta::create([
+            'convite_id' => $convite->id, 'tipo' => 'primeira', 'etapa' => 4,
+            'consentimento_versao' => 'x', 'consentimento_aceito_em' => now(),
+            'dados' => ['rascunho' => \App\Anamnese\PrimeiraConsulta::estadoInicial()],
+        ]);
+
+        $this->abrir($convite)->assertSee('Onívoro: come de tudo, inclusive carnes.');
     }
 
     public function test_sem_gestacao_e_com_idade_em_vez_de_nascimento(): void
@@ -146,11 +209,19 @@ class AnamnesePacienteTest extends TestCase
             1 => ['sexo' => 'Masculino', 'usa_idade' => true, 'idade_informada' => '45', 'nascimento' => ''],
             2 => ['atividade_nao_pratica' => true, 'metas_nao_tem' => true],
             4 => ['compulsao_nao_tem' => true],
-            5 => ['medicamentos_nao_toma' => true],
+            5 => ['medicamentos_nao_toma' => true, 'sem_condicoes' => true, 'condicoes' => ['Hipertensão'], 'historico_familiar_situacao' => 'nao_sabe'],
             7 => ['observacoes_sem' => true],
         ]);
 
         $d = Resposta::sole()->dados;
+        // "Não tenho problemas de saúde" ignora o que tinha sido marcado antes
+        $this->assertTrue($d['saude']['sem_condicoes']);
+        $this->assertSame([], $d['saude']['condicoes']);
+        // "Não sei" no histórico familiar: lista vazia
+        $this->assertTrue($d['saude']['historico_familiar_nao_sabe']);
+        $this->assertFalse($d['saude']['historico_familiar_nao_tem']);
+        $this->assertSame([], $d['saude']['historico_familiar']);
+        $this->assertSame('', $d['saude']['historico_familiar_obs']);
         $this->assertNull($d['identificacao']['nascimento']);
         $this->assertSame(45, $d['identificacao']['idade_informada']);
         $this->assertFalse($d['identificacao']['gestante']);
