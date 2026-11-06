@@ -18,7 +18,7 @@ Pendências do site, em ordem de execução. Marcar `[x]` ao concluir. Repositó
 ## Anamnese (contrato `INTEGRACAO-CONSULTORIO.md` v1.0, plano aprovado)
 - [x] Registrar em "Mudanças propostas": `validade_dias` de 1 a 30
 - [x] Etapa 1: modelo de convite e criação pelo painel
-- [ ] Etapa 2: página do paciente com consentimento e formulário de primeira consulta
+- [x] Etapa 2: página do paciente com consentimento e formulário de primeira consulta (texto do consentimento ainda RASCUNHO: aprovar com a Hellen antes de publicar)
 - [ ] Etapa 3: uploads privados (exige armazenamento persistente no Coolify)
 - [ ] Etapa 4: formulário de retorno
 - [ ] Etapa 5: API v1 com token

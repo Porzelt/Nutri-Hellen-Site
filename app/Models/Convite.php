@@ -61,6 +61,11 @@ class Convite extends Model
         return $convite;
     }
 
+    public function resposta(): \Illuminate\Database\Eloquent\Relations\HasOne
+    {
+        return $this->hasOne(Resposta::class);
+    }
+
     public static function hashDoToken(string $token): string
     {
         return hash('sha256', $token);
