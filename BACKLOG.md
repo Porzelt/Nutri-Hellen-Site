@@ -13,7 +13,7 @@ Pendências do site, em ordem de execução. Marcar `[x]` ao concluir. Repositó
 - [x] Redirecionar `www` para o domínio principal (301 permanente, preserva caminho e parâmetros)
 
 ## Desempenho do site
-- [ ] Converter `public/img/home-hellen.png` (e demais imagens grandes) para WebP
+- [x] Converter imagens para WebP (1,7 MB → 130 KB; `home-hellen.png` não era usada e foi removida)
 
 ## Anamnese (contrato `INTEGRACAO-CONSULTORIO.md` v1.0, plano aprovado)
 - [ ] Registrar em "Mudanças propostas": `validade_dias` de 1 a 30

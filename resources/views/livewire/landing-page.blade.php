@@ -17,7 +17,9 @@
             <div class="lg:w-1/2">
                 <div class="relative flex items-center justify-center bg-brand-light lg:col-span-5 lg:-mr-8 xl:absolute xl:inset-0 xl:left-1/2 xl:mr-0">
                     <img class="h-64 w-auto object-contain lg:h-96"
-                        src="/img/Logo sem crn_sem_pesos.png"
+                        src="/img/logo-hellen.webp"
+                        width="2000" height="748"
+                        fetchpriority="high"
                         alt="Nutricionista Hellen">
                 </div>
             </div>
@@ -30,7 +32,9 @@
                 <div class="relative">
                     <div class="absolute -top-4 -left-4 w-full h-full bg-green-100 rounded-2xl -z-10"></div>
 
-                    <img src="/img/sobre-hellen.png"
+                    <img src="/img/sobre-hellen.webp"
+                        width="960" height="805"
+                        loading="lazy" decoding="async"
                         alt="Nutricionista Hellen sorrindo no consultório"
                         class="rounded-2xl shadow-lg w-full h-auto object-cover transform hover:scale-[1.02] transition duration-500">
                 </div>
