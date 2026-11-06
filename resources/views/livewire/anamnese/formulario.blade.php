@@ -342,8 +342,43 @@
                     </div>
                 @endif
 
-                {{-- 6. Observações e envio --}}
+                {{-- 6. Exames e arquivos --}}
                 @if ($etapa === 6)
+                    <p class="text-sm text-gray-600">Envie fotos ou PDFs. Até 15 MB por arquivo, 15 arquivos no total. Para cada item, anexe ou marque “não tenho”.</p>
+                    @foreach (['exames' => ['Exames de sangue ou outros exames', 'Não tenho exames recentes'], 'bio' => ['Bioimpedância', 'Não tenho bioimpedância'], 'outros' => ['Outros documentos (ex.: pedido médico, dieta anterior)', 'Não tenho outros documentos']] as $cat => [$titulo, $textoNao])
+                        <div class="rounded-xl border border-gray-200 p-4 space-y-3" wire:key="cat-{{ $cat }}">
+                            <span class="{{ $label }}">{{ $titulo }}</span>
+
+                            @foreach ($arquivos->get($cat, []) as $arq)
+                                <div wire:key="arq-{{ $arq->id }}" class="flex items-center justify-between gap-2 rounded-lg bg-gray-50 px-3 py-2 text-sm">
+                                    <span class="truncate">📎 {{ $arq->nome_original }} <span class="text-gray-400">({{ $arq->tamanho_bytes < 1048576 ? max(1, round($arq->tamanho_bytes / 1024)).' KB' : number_format($arq->tamanho_bytes / 1048576, 1, ',', '').' MB' }})</span></span>
+                                    <button type="button" wire:click="removerArquivo('{{ $arq->id }}')" class="shrink-0 text-red-600">Remover</button>
+                                </div>
+                            @endforeach
+
+                            @unless ($f['sem_'.$cat])
+                                <label class="flex cursor-pointer items-center justify-center gap-2 rounded-xl border-2 border-dashed border-gray-300 px-4 py-4 text-sm font-semibold" style="color: var(--cor-marca)">
+                                    <input type="file" multiple wire:model="uploads.{{ $cat }}" accept=".pdf,.png,.jpg,.jpeg,.heic,.heif,.webp,application/pdf,image/*" class="sr-only">
+                                    <span wire:loading.remove wire:target="uploads.{{ $cat }}">+ Escolher arquivo ou tirar foto</span>
+                                    <span wire:loading wire:target="uploads.{{ $cat }}">Enviando…</span>
+                                </label>
+                            @endunless
+
+                            @if ($arquivos->get($cat, collect())->isEmpty())
+                                <label class="flex items-center gap-2 text-sm text-gray-700">
+                                    <input type="checkbox" wire:model.live="f.sem_{{ $cat }}" class="h-5 w-5 accent-[var(--cor-marca)]"> {{ $textoNao }}
+                                </label>
+                            @endif
+                            {!! $erro('arquivos_'.$cat) !!}
+                            @if ($errors->has('uploads.'.$cat.'.*'))
+                                <p class="text-red-600 text-sm">Não foi possível enviar: o arquivo precisa ter até 15 MB.</p>
+                            @endif
+                        </div>
+                    @endforeach
+                @endif
+
+                {{-- 7. Observações e envio --}}
+                @if ($etapa === 7)
                     <div>
                         <label class="{{ $label }}" for="obs">Quer contar mais alguma coisa para a nutricionista?</label>
                         <label class="flex items-center gap-2 text-sm text-gray-700 mb-2">

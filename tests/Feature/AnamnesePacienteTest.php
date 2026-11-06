@@ -45,14 +45,18 @@ class AnamnesePacienteTest extends TestCase
                 'medicamentos' => [['nome' => 'levotiroxina', 'dose' => '', 'horario' => '', 'nao_informado' => true]],
                 'suplementos' => [['nome' => 'ácido fólico', 'dose' => '5 mg', 'horario' => 'manhã', 'nao_informado' => false]],
                 'historico_familiar' => ['Diabetes', 'Hipertensão'], 'historico_familiar_obs' => 'mãe'],
-            6 => ['observacoes_texto' => 'Trabalho em pé o dia todo'],
+            6 => ['sem_exames' => true, 'sem_bio' => true, 'sem_outros' => true],
+            7 => ['observacoes_texto' => 'Trabalho em pé o dia todo'],
         ];
 
         foreach ($etapas as $etapa => $campos) {
+            if (isset($extra['antes'][$etapa])) {
+                ($extra['antes'][$etapa])($t);
+            }
             foreach (array_merge($campos, $extra[$etapa] ?? []) as $campo => $valor) {
                 $t->set("f.$campo", $valor);
             }
-            $etapa < 6
+            $etapa < 7
                 ? $t->call('avancar')->assertHasNoErrors()->assertSet('etapa', $etapa + 1)
                 : $t->call('enviar')->assertHasNoErrors();
         }
@@ -143,7 +147,7 @@ class AnamnesePacienteTest extends TestCase
             2 => ['atividade_nao_pratica' => true, 'metas_nao_tem' => true],
             4 => ['compulsao_nao_tem' => true],
             5 => ['medicamentos_nao_toma' => true],
-            6 => ['observacoes_sem' => true],
+            7 => ['observacoes_sem' => true],
         ]);
 
         $d = Resposta::sole()->dados;

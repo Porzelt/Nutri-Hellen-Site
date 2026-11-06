@@ -38,6 +38,17 @@ return [
             'report' => false,
         ],
 
+        // Anexos da anamnese (contrato, secao 4/7): disco PRIVADO, nunca servido,
+        // arquivos criptografados e com nome aleatorio. Apagados apos importacao ou 7 dias.
+        'anamnese' => [
+            'driver' => 'local',
+            'root' => storage_path('app/private/anamnese'),
+            'serve' => false,
+            'visibility' => 'private',
+            'throw' => true,
+            'report' => false,
+        ],
+
         'public' => [
             'driver' => 'local',
             'root' => storage_path('app/public'),

@@ -43,8 +43,12 @@ class PrimeiraConsulta
         3 => 'Sono e hábitos',
         4 => 'Alimentação',
         5 => 'Saúde',
-        6 => 'Observações e envio',
+        6 => 'Exames e arquivos',
+        7 => 'Observações e envio',
     ];
+
+    /** Etapa dos anexos: validada pelo componente (depende dos arquivos já enviados). */
+    public const ETAPA_ARQUIVOS = 6;
 
     public static function estadoInicial(): array
     {
@@ -68,6 +72,8 @@ class PrimeiraConsulta
             'medicamentos_nao_toma' => false, 'medicamentos' => [self::linhaItem()],
             'suplementos_nao_usa' => false, 'suplementos' => [self::linhaItem()],
             'historico_familiar' => [], 'historico_familiar_obs' => '',
+
+            'sem_exames' => false, 'sem_bio' => false, 'sem_outros' => false,
 
             'observacoes_sem' => false, 'observacoes_texto' => '',
         ];
@@ -146,7 +152,7 @@ class PrimeiraConsulta
             ], self::regrasItens('medicamentos', $f['medicamentos_nao_toma']),
                 self::regrasItens('suplementos', $f['suplementos_nao_usa'])),
 
-            6 => [
+            7 => [
                 'f.observacoes_texto' => $f['observacoes_sem'] ? ['nullable', 'string', 'max:2000'] : ['required', 'string', 'max:2000'],
             ],
 
@@ -222,7 +228,7 @@ class PrimeiraConsulta
     }
 
     /** Monta o JSON da seção 6.1 (sem os metadados id/convite/datas, que o modelo acrescenta). */
-    public static function montar(array $f): array
+    public static function montar(array $f, array $arquivos = []): array
     {
         $t = fn ($v) => ($v = trim((string) $v)) === '' ? null : $v;
         $num = fn ($v) => $t($v) === null ? null : (float) $v;
@@ -285,8 +291,12 @@ class PrimeiraConsulta
                 'historico_familiar_obs' => trim((string) $f['historico_familiar_obs']),
             ],
             'observacoes' => ['sem_observacoes' => (bool) $f['observacoes_sem'], 'texto' => $f['observacoes_sem'] ? null : $t($f['observacoes_texto'])],
-            // Arquivos chegam na etapa 3 do desenvolvimento (uploads privados)
-            'arquivos' => ['sem_exames' => false, 'sem_bio' => false, 'sem_outros' => false, 'lista' => []],
+            'arquivos' => [
+                'sem_exames' => (bool) $f['sem_exames'],
+                'sem_bio' => (bool) $f['sem_bio'],
+                'sem_outros' => (bool) $f['sem_outros'],
+                'lista' => $arquivos,
+            ],
         ];
     }
 }

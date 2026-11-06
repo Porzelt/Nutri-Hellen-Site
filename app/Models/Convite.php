@@ -61,6 +61,12 @@ class Convite extends Model
         return $convite;
     }
 
+    protected static function booted(): void
+    {
+        // Cancelar/apagar o convite apaga a resposta e os arquivos (banco e disco)
+        static::deleting(fn (Convite $c) => $c->resposta()->first()?->delete());
+    }
+
     public function resposta(): \Illuminate\Database\Eloquent\Relations\HasOne
     {
         return $this->hasOne(Resposta::class);
