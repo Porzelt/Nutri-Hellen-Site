@@ -16,8 +16,8 @@ Pendências do site, em ordem de execução. Marcar `[x]` ao concluir. Repositó
 - [x] Converter imagens para WebP (1,7 MB → 130 KB; `home-hellen.png` não era usada e foi removida)
 
 ## Anamnese (contrato `INTEGRACAO-CONSULTORIO.md` v1.0, plano aprovado)
-- [ ] Registrar em "Mudanças propostas": `validade_dias` de 1 a 30
-- [ ] Etapa 1: modelo de convite e criação pelo painel
+- [x] Registrar em "Mudanças propostas": `validade_dias` de 1 a 30
+- [x] Etapa 1: modelo de convite e criação pelo painel
 - [ ] Etapa 2: página do paciente com consentimento e formulário de primeira consulta
 - [ ] Etapa 3: uploads privados (exige armazenamento persistente no Coolify)
 - [ ] Etapa 4: formulário de retorno

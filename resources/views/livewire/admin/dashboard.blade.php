@@ -1,16 +1,5 @@
 <div class="min-h-screen bg-gray-100">
-    <nav class="bg-brand-secondary text-white shadow-lg">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex items-center justify-between h-16">
-                <div class="flex items-center">
-                    <span class="font-bold text-xl">Nutri Admin 🍐</span>
-                </div>
-                <button wire:click="logout" class="text-sm bg-red-600 hover:bg-red-700 px-3 py-1 rounded transition">
-                    Sair do Sistema
-                </button>
-            </div>
-        </div>
-    </nav>
+    @include('livewire.admin.partials.nav')
 
     <main class="max-w-7xl mx-auto py-10 px-4 sm:px-6 lg:px-8">
         
