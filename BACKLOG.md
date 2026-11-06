@@ -9,7 +9,7 @@ Pendências do site, em ordem de execução. Marcar `[x]` ao concluir. Repositó
 - [x] Firewall da VPS na DigitalOcean: liberar só SSH, HTTP e HTTPS (Henrique)
 - [x] Aplicar atualizações do sistema e reiniciar a VPS (Docker 29, MariaDB 11.8.9; DB_HOST passou a usar o nome interno do banco em vez de IP fixo)
 - [x] Verificar e aplicar as "Changes pending" do MariaDB no Coolify
-- [ ] Healthcheck da aplicação apontando para `/up`
+- [x] Healthcheck da aplicação apontando para `/up` (porta 8080, deploy só troca o container se o novo estiver saudável)
 - [ ] Redirecionar `www` para o domínio principal
 
 ## Desempenho do site
