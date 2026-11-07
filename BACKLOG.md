@@ -26,5 +26,35 @@ Pendências do site, em ordem de execução. Marcar `[x]` ao concluir. Repositó
 - [ ] Etapa 6: limpeza agendada (exige tarefa agendada no Coolify) e política de privacidade
 - [ ] Teste de ponta a ponta com o app local antes de publicar
 
+## Site público e divulgação (sugestões da sessão do Instagram, 2026-11-07)
+
+Ordem: primeiro o que é obrigatório (CFN e LGPD), depois o que faz ser encontrada, depois o que converte e mede. Antes de mostrar preço, promoção, depoimento ou "antes e depois", conferir o Código de Ética do CFN.
+
+### Obrigatório
+- [ ] Mostrar o registro profissional (CRN-3) no topo/rodapé da landing e no cabeçalho do formulário de anamnese. Já existe `MARCA_REGISTRO`: preencher no Coolify e exibir na landing
+- [ ] Política de privacidade (página `/privacidade`) cobrindo a landing, o formulário de agendamento e a anamnese. Junta com a etapa 6 da anamnese
+- [ ] Formulário de agendamento: linha de consentimento ("Ao enviar, você concorda com a política de privacidade") com link
+- [ ] Analytics e Pixel só com aviso/consentimento de cookies (LGPD). Nunca nas páginas da anamnese (CSP já bloqueia scripts de terceiros lá)
+
+### Ser encontrada
+- [ ] Dizer onde atende: "São Paulo · presencial e online" (hero e rodapé), com o bairro (configurável por ambiente)
+- [ ] Link do Instagram no rodapé (configurável: `MARCA_INSTAGRAM`)
+- [ ] SEO básico: `<title>` e `meta description` com "nutricionista em São Paulo · emagrecimento · online", `alt` descritivo nas imagens
+- [ ] Dados estruturados (schema.org `Dietitian`/`LocalBusiness`) com nome, CRN, cidade/bairro, área de atendimento online, Instagram e WhatsApp
+- [ ] Imagem de compartilhamento (Open Graph/Twitter Card) para a prévia no WhatsApp: imagem 1200x630 com logo e chamada
+- [ ] Perfil da Empresa no Google (Henrique/Hellen, fora do site): linkar o site; o site cita o mesmo bairro
+
+### Converter
+- [ ] Seção de perguntas frequentes (duração, retorno, como funciona o online, pagamento, convênio), com dados estruturados `FAQPage`. Textos aprovados pela Hellen
+- [ ] Fotos reais do consultório e da Hellen atendendo (fornecidas por ela, convertidas para WebP)
+- [ ] Depoimentos: só com autorização por escrito das pacientes e sem "antes e depois" (conferir o Código de Ética do CFN)
+- [ ] Isca digital ("Guia de 7 trocas inteligentes"): página de captura com nome e WhatsApp, consentimento e entrega do PDF. Mesma regra de LGPD do agendamento
+
+### Medir e reaproveitar
+- [ ] Analytics com respeito à privacidade (preferir Plausible/Umami, sem cookies; GA4 exige banner de consentimento). Registrar o evento "agendamento enviado"
+- [ ] Guardar a origem (UTM) no lead do agendamento e mostrar no painel, para saber quantos agendamentos vêm do Instagram. Funciona mesmo sem analytics. Link da bio: `?utm_source=instagram&utm_medium=bio`
+- [ ] Pixel da Meta (opcional, só depois do banner de cookies)
+- [ ] Blog simples: cada carrossel vira um artigo curto (avaliar depois do básico acima)
+
 ## Depois
 - [ ] Avaliar upgrade para Laravel 13 / Livewire 4 (remove `'unsafe-eval'` da CSP)
