@@ -268,3 +268,15 @@ Mudança compatível: só acrescenta campos opcionais. `versao_esquema` passa a 
 - Os dois indicadores de histórico nunca vêm `true` juntos. Com ambos `false`, o paciente marcou pelo menos uma doença ou escreveu em `historico_familiar_obs`
 - `sono_habitos.hidratacao` continua texto, mas passa a vir sempre de uma destas opções: `Menos de 1 litro` | `1 a 2 litros` | `2 a 3 litros` | `Mais de 3 litros`
 - Para o app local: tratar a ausência dos campos novos (resposta 1.0) como `false`
+
+### 3. Detalhes da API v1 (site, 2026-11-07)
+
+Esclarecimentos de comportamento, sem mudar campos:
+
+- `POST /api/v1/respostas/{id}/importado` apaga também o convite (nome e `paciente_ref`), não só a resposta e os arquivos: depois da importação o site não guarda nada do paciente
+- `DELETE /api/v1/convites/{id}` responde `204`; convite inexistente responde `404`
+- `validade_dias` é opcional no `POST /api/v1/convites` (padrão 7)
+- Rascunhos nunca aparecem na API: só respostas enviadas
+- Download de arquivo: `Content-Disposition: attachment` com o nome original em `filename*` (UTF-8)
+- Limite padrão: 60 requisições por minuto, por IP e por token
+- O token é gerado no servidor com `php artisan anamnese:token`: o comando mostra o token (vai só para o app local) e o hash (vai para `ANAMNESE_API_TOKEN_HASH` no ambiente do servidor)

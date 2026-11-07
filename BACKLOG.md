@@ -22,7 +22,7 @@ Pendências do site, em ordem de execução. Marcar `[x]` ao concluir. Repositó
 - [x] Etapa 3: uploads privados (arquivos criptografados em storage/app/private/anamnese)
 - [ ] Antes de publicar a anamnese: armazenamento persistente no Coolify para `/var/www/html/storage/app/private` (sem isso, cada deploy apaga anexos ainda não importados)
 - [x] Etapa 4: formulário de retorno (5 etapas, JSON da seção 6.3)
-- [ ] Etapa 5: API v1 com token
+- [x] Etapa 5: API v1 com token (`php artisan anamnese:token`; no Coolify vai só o hash em `ANAMNESE_API_TOKEN_HASH`)
 - [ ] Etapa 6: limpeza agendada (exige tarefa agendada no Coolify) e política de privacidade
 - [ ] Teste de ponta a ponta com o app local antes de publicar
 

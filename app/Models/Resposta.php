@@ -51,4 +51,52 @@ class Resposta extends Model
     {
         return $this->enviado_em !== null;
     }
+
+    /** Data no formato do contrato: ISO 8601 no horário de Brasília (ex.: 2026-10-27T14:03:00-03:00). */
+    public static function iso(?\DateTimeInterface $data): ?string
+    {
+        return $data ? \Illuminate\Support\Carbon::instance($data)->timezone(Convite::FUSO)->toIso8601String() : null;
+    }
+
+    /** Item da listagem de pendentes (contrato, seção 5). */
+    public function paraLista(): array
+    {
+        return [
+            'id' => $this->id,
+            'convite_id' => $this->convite_id,
+            'tipo' => $this->tipo,
+            'nome_paciente' => $this->convite?->nome_paciente,
+            'paciente_ref' => $this->convite?->paciente_ref,
+            'enviado_em' => self::iso($this->enviado_em),
+            'qtd_arquivos' => $this->arquivos_count ?? $this->arquivos()->count(),
+        ];
+    }
+
+    /** Resposta completa no esquema da seção 6 (6.1 ou 6.3). */
+    public function paraContrato(): array
+    {
+        $dados = $this->dados;
+
+        // Números decimais voltam do JSON como inteiros (82.0 -> 82): devolve como decimal
+        foreach (['identificacao.peso_kg', 'identificacao.peso_pre_gestacional_kg', 'sono_habitos.sono_horas'] as $campo) {
+            $valor = data_get($dados, $campo);
+            if (is_int($valor)) {
+                data_set($dados, $campo, (float) $valor);
+            }
+        }
+
+        return [
+            'id' => $this->id,
+            'versao_esquema' => self::VERSAO_ESQUEMA,
+            'tipo' => $this->tipo,
+            'convite_id' => $this->convite_id,
+            'paciente_ref' => $this->convite?->paciente_ref,
+            'enviado_em' => self::iso($this->enviado_em),
+            'consentimento' => [
+                'aceito' => $this->consentimento_aceito_em !== null,
+                'texto_versao' => $this->consentimento_versao,
+                'aceito_em' => self::iso($this->consentimento_aceito_em),
+            ],
+        ] + $dados;
+    }
 }
