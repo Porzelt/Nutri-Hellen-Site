@@ -6,7 +6,7 @@
     $erro = fn ($campo) => $errors->has($campo) ? '<p class="text-red-600 text-sm mt-1">'.e($errors->first($campo)).'</p>' : '';
     $total = count($etapas);
     // Dica curta abaixo da pergunta (P::DICAS)
-    $dica = fn ($chave) => isset(P::DICAS[$chave]) ? '<p class="mt-1 mb-2 flex gap-1 text-xs text-gray-500"><span aria-hidden="true">💡</span><span>'.e(P::DICAS[$chave]).'</span></p>' : '';
+    $dica = fn ($chave) => isset($dicas[$chave]) ? '<p class="mt-1 mb-2 flex gap-1 text-xs text-gray-500"><span aria-hidden="true">💡</span><span>'.e($dicas[$chave]).'</span></p>' : '';
 @endphp
 
 <div>
@@ -26,12 +26,6 @@
             <p class="text-gray-600">Obrigada por preencher. A {{ $marca['nome'] }} vai analisar tudo antes da sua consulta. Você já pode fechar esta página.</p>
         </div>
 
-    {{-- Retorno: chega numa próxima etapa do desenvolvimento --}}
-    @elseif ($tipo !== 'primeira')
-        <div class="{{ $card }} text-center">
-            <h1 class="text-xl font-bold text-gray-800">Formulário em preparação</h1>
-            <p class="text-gray-600">Este formulário ainda não está disponível. Fale com a nutricionista.</p>
-        </div>
 
     {{-- Consentimento --}}
     @elseif ($etapa === 0)
@@ -73,7 +67,7 @@
                 <h2 class="text-lg font-bold text-gray-800">{{ $etapas[$etapa] }}</h2>
 
                 {{-- 1. Sobre você --}}
-                @if ($etapa === 1)
+                @if ($tipo === 'primeira' && $etapa === 1)
                     <div>
                         <label class="{{ $label }}" for="nome">Nome completo</label>
                         <input id="nome" type="text" wire:model="f.nome" class="{{ $input }}" autocomplete="name">
@@ -146,7 +140,7 @@
                 @endif
 
                 {{-- 2. Rotina e objetivo --}}
-                @if ($etapa === 2)
+                @if ($tipo === 'primeira' && $etapa === 2)
                     <div>
                         <label class="{{ $label }}" for="profissao">Profissão</label>
                         <input id="profissao" type="text" wire:model="f.profissao" class="{{ $input }}">
@@ -206,7 +200,7 @@
                 @endif
 
                 {{-- 3. Sono e hábitos --}}
-                @if ($etapa === 3)
+                @if ($tipo === 'primeira' && $etapa === 3)
                     <div class="grid grid-cols-2 gap-3">
                         <div>
                             <label class="{{ $label }}" for="sono_horas">Horas de sono por noite</label>
@@ -241,7 +235,7 @@
                 @endif
 
                 {{-- 4. Alimentação --}}
-                @if ($etapa === 4)
+                @if ($tipo === 'primeira' && $etapa === 4)
                     @foreach ([['alergias', 'Tem alergia ou intolerância alimentar?', 'Quais?'], ['aversoes', 'Tem alimentos que não come de jeito nenhum?', 'Quais?']] as [$campo, $titulo, $pergunta])
                         <div>
                             <span class="{{ $label }}">{{ $titulo }}</span>
@@ -288,7 +282,7 @@
                 @endif
 
                 {{-- 5. Saúde --}}
-                @if ($etapa === 5)
+                @if ($tipo === 'primeira' && $etapa === 5)
                     <div>
                         <span class="{{ $label }}">Tem algum problema de saúde? (marque todos que tiver)</span>
                         {!! $dica('condicoes') !!}
@@ -308,37 +302,7 @@
                         {!! $erro('f.condicoes') !!}
                     </div>
 
-                    @foreach ([['medicamentos', 'medicamentos_nao_toma', 'Medicamentos', 'Não tomo medicamentos'], ['suplementos', 'suplementos_nao_usa', 'Suplementos e vitaminas', 'Não uso suplementos']] as [$lista, $nenhum, $titulo, $textoNenhum])
-                        <div>
-                            <span class="{{ $label }}">{{ $titulo }}</span>
-                            <label class="flex items-center gap-2 text-sm text-gray-700 mb-2">
-                                <input type="checkbox" wire:model.live="f.{{ $nenhum }}" class="h-5 w-5 accent-[var(--cor-marca)]"> {{ $textoNenhum }}
-                            </label>
-                            @unless ($f[$nenhum])
-                                <div class="space-y-3">
-                                    @foreach ($f[$lista] as $i => $item)
-                                        <div wire:key="{{ $lista }}-{{ $i }}" class="rounded-xl border border-gray-200 p-3 space-y-2">
-                                            <input type="text" placeholder="Nome" wire:model="f.{{ $lista }}.{{ $i }}.nome" class="{{ $input }}">
-                                            {!! $erro("f.$lista.$i.nome") !!}
-                                            <label class="flex items-center gap-2 text-sm text-gray-700">
-                                                <input type="checkbox" wire:model.live="f.{{ $lista }}.{{ $i }}.nao_informado" class="h-5 w-5 accent-[var(--cor-marca)]"> Não sei a dose nem o horário
-                                            </label>
-                                            @unless ($item['nao_informado'])
-                                                <div class="grid grid-cols-2 gap-2">
-                                                    <input type="text" placeholder="Dose" wire:model="f.{{ $lista }}.{{ $i }}.dose" class="{{ $input }}">
-                                                    <input type="text" placeholder="Horário" wire:model="f.{{ $lista }}.{{ $i }}.horario" class="{{ $input }}">
-                                                </div>
-                                            @endunless
-                                            @if (count($f[$lista]) > 1)
-                                                <button type="button" wire:click="removerLinha('{{ $lista }}', {{ $i }})" class="text-sm text-red-600">Remover</button>
-                                            @endif
-                                        </div>
-                                    @endforeach
-                                    <button type="button" wire:click="adicionarLinha('{{ $lista }}')" class="text-sm font-semibold" style="color: var(--cor-marca)">+ Adicionar</button>
-                                </div>
-                            @endunless
-                        </div>
-                    @endforeach
+                    @include('livewire.anamnese.partials.itens')
 
                     <div>
                         <span class="{{ $label }}">Há doenças na sua família?</span>
@@ -365,8 +329,10 @@
                     </div>
                 @endif
 
-                {{-- 6. Exames e arquivos --}}
-                @if ($etapa === 6)
+                @include('livewire.anamnese.partials.retorno')
+
+                {{-- Exames e arquivos (primeira e retorno) --}}
+                @if ($etapa === $etapaArquivos)
                     <p class="text-sm text-gray-600">Envie fotos ou PDFs. Até 15 MB por arquivo, 15 arquivos no total. Para cada item, anexe ou marque “não tenho”.</p>
                     @foreach (['exames' => ['Exames de sangue ou outros exames', 'Não tenho exames recentes'], 'bio' => ['Bioimpedância', 'Não tenho bioimpedância'], 'outros' => ['Outros documentos (ex.: pedido médico, dieta anterior)', 'Não tenho outros documentos']] as $cat => [$titulo, $textoNao])
                         <div class="rounded-xl border border-gray-200 p-4 space-y-3" wire:key="cat-{{ $cat }}">
@@ -401,8 +367,8 @@
                     @endforeach
                 @endif
 
-                {{-- 7. Observações e envio --}}
-                @if ($etapa === 7)
+                {{-- Observações e envio (última etapa) --}}
+                @if ($etapa === $total)
                     <div>
                         <label class="{{ $label }}" for="obs">Quer contar mais alguma coisa para a nutricionista?</label>
                         <label class="flex items-center gap-2 text-sm text-gray-700 mb-2">

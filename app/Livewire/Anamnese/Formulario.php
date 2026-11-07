@@ -3,6 +3,7 @@
 namespace App\Livewire\Anamnese;
 
 use App\Anamnese\PrimeiraConsulta;
+use App\Anamnese\Retorno;
 use App\Models\Arquivo;
 use App\Models\Convite;
 use App\Models\Resposta;
@@ -53,13 +54,13 @@ class Formulario extends Component
 
         $this->conviteId = $convite->id;
         $this->tipo = $convite->tipo;
-        $this->f = PrimeiraConsulta::estadoInicial();
+        $this->f = $this->estadoInicial($convite);
 
         // Retoma o rascunho, se houver
         $rascunho = $convite->resposta;
         if ($rascunho && ! $rascunho->enviada()) {
-            $this->f = array_replace(PrimeiraConsulta::estadoInicial(), $rascunho->dados['rascunho'] ?? []);
-            $this->etapa = min($rascunho->etapa, max(array_keys(PrimeiraConsulta::ETAPAS)));
+            $this->f = array_replace($this->estadoInicial($convite), $rascunho->dados['rascunho'] ?? []);
+            $this->etapa = min($rascunho->etapa, max(array_keys($this->modelo()::ETAPAS)));
             $this->aceite = $rascunho->consentimento_aceito_em !== null;
         }
     }
@@ -76,6 +77,20 @@ class Formulario extends Component
         }
 
         return $convite;
+    }
+
+    /** Classe do formulário conforme o tipo do convite. */
+    private function modelo(): string
+    {
+        return $this->tipo === 'retorno' ? Retorno::class : PrimeiraConsulta::class;
+    }
+
+    /** No retorno, o nome já vem preenchido com o nome do convite. */
+    private function estadoInicial(Convite $convite): array
+    {
+        return $this->tipo === 'retorno'
+            ? Retorno::estadoInicial($convite->nome_paciente)
+            : PrimeiraConsulta::estadoInicial();
     }
 
     public function aceitar(): void
@@ -102,14 +117,14 @@ class Formulario extends Component
             return;
         }
 
-        $this->f = PrimeiraConsulta::normalizar($this->f);
+        $this->f = $this->modelo()::normalizar($this->f);
         $this->validarEtapa($this->etapa);
 
-        if ($this->etapa === PrimeiraConsulta::ETAPA_ARQUIVOS && ! $this->arquivosOk($convite)) {
+        if ($this->etapa === $this->modelo()::ETAPA_ARQUIVOS && ! $this->arquivosOk($convite)) {
             return;
         }
 
-        $this->etapa = min($this->etapa + 1, max(array_keys(PrimeiraConsulta::ETAPAS)));
+        $this->etapa = min($this->etapa + 1, max(array_keys($this->modelo()::ETAPAS)));
         $this->salvarRascunho($convite);
     }
 
@@ -126,11 +141,11 @@ class Formulario extends Component
             return;
         }
 
-        $this->f = PrimeiraConsulta::normalizar($this->f);
+        $this->f = $this->modelo()::normalizar($this->f);
 
         // Valida tudo; se algo de uma etapa anterior estiver errado, volta para ela
-        foreach (array_keys(PrimeiraConsulta::ETAPAS) as $etapa) {
-            $validador = validator($this->all(), PrimeiraConsulta::regras($etapa, $this->f), PrimeiraConsulta::mensagens());
+        foreach (array_keys($this->modelo()::ETAPAS) as $etapa) {
+            $validador = validator($this->all(), $this->modelo()::regras($etapa, $this->f), $this->modelo()::mensagens());
             if ($validador->fails()) {
                 $this->etapa = $etapa;
                 $this->validarEtapa($etapa);
@@ -139,7 +154,7 @@ class Formulario extends Component
             }
         }
         if (! $this->arquivosOk($convite)) {
-            $this->etapa = PrimeiraConsulta::ETAPA_ARQUIVOS;
+            $this->etapa = $this->modelo()::ETAPA_ARQUIVOS;
 
             return;
         }
@@ -154,7 +169,7 @@ class Formulario extends Component
         DB::transaction(function () use ($convite, $resposta) {
             $lista = $resposta->arquivos()->oldest()->get()->map->paraContrato()->all();
 
-            $resposta->dados = PrimeiraConsulta::montar($this->f, $lista);
+            $resposta->dados = $this->modelo()::montar($this->f, $lista);
             $resposta->enviado_em = now();
             $resposta->etapa = 0;
             $resposta->save();
@@ -170,9 +185,9 @@ class Formulario extends Component
 
     private function validarEtapa(int $etapa): void
     {
-        $regras = PrimeiraConsulta::regras($etapa, $this->f);
+        $regras = $this->modelo()::regras($etapa, $this->f);
         if ($regras !== []) {
-            $this->validate($regras, PrimeiraConsulta::mensagens());
+            $this->validate($regras, $this->modelo()::mensagens());
         }
     }
 
@@ -263,7 +278,7 @@ class Formulario extends Component
     public function adicionarLinha(string $lista): void
     {
         $permitidas = ['atividades' => PrimeiraConsulta::linhaAtividade(), 'medicamentos' => PrimeiraConsulta::linhaItem(), 'suplementos' => PrimeiraConsulta::linhaItem()];
-        if (isset($permitidas[$lista]) && count($this->f[$lista]) < 10) {
+        if (isset($permitidas[$lista], $this->f[$lista]) && count($this->f[$lista]) < 10) {
             $this->f[$lista][] = $permitidas[$lista];
         }
     }
@@ -282,12 +297,14 @@ class Formulario extends Component
     public function render()
     {
         $arquivos = collect();
-        if ($this->conviteId && $this->etapa === PrimeiraConsulta::ETAPA_ARQUIVOS) {
+        if ($this->conviteId && $this->etapa === $this->modelo()::ETAPA_ARQUIVOS) {
             $arquivos = Resposta::where('convite_id', $this->conviteId)->first()?->arquivos()->oldest()->get()->groupBy('categoria') ?? collect();
         }
 
         return view('livewire.anamnese.formulario', [
-            'etapas' => PrimeiraConsulta::ETAPAS,
+            'etapas' => $this->modelo()::ETAPAS,
+            'etapaArquivos' => $this->modelo()::ETAPA_ARQUIVOS,
+            'dicas' => $this->modelo()::DICAS,
             'marca' => config('marca'),
             'arquivos' => $arquivos,
         ]);

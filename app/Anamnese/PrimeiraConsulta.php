@@ -186,7 +186,7 @@ class PrimeiraConsulta
         };
     }
 
-    private static function regrasItens(string $campo, bool $nenhum): array
+    public static function regrasItens(string $campo, bool $nenhum): array
     {
         if ($nenhum) {
             return [];
@@ -257,6 +257,23 @@ class PrimeiraConsulta
         return $f;
     }
 
+    /** "medicamentos" e "suplementos" (iguais na primeira consulta e no retorno). */
+    public static function montarItens(array $f): array
+    {
+        $t = fn ($v) => ($v = trim((string) $v)) === '' ? null : $v;
+        $itens = fn (array $lista) => array_values(array_map(fn ($i) => [
+            'nome' => trim($i['nome']),
+            'dose' => $i['nao_informado'] ? null : $t($i['dose']),
+            'horario' => $i['nao_informado'] ? null : $t($i['horario']),
+            'nao_informado' => (bool) $i['nao_informado'],
+        ], array_filter($lista, fn ($i) => trim($i['nome'] ?? '') !== '')));
+
+        return [
+            'medicamentos' => ['nao_toma' => (bool) $f['medicamentos_nao_toma'], 'lista' => $f['medicamentos_nao_toma'] ? [] : $itens($f['medicamentos'])],
+            'suplementos' => ['nao_usa' => (bool) $f['suplementos_nao_usa'], 'lista' => $f['suplementos_nao_usa'] ? [] : $itens($f['suplementos'])],
+        ];
+    }
+
     /** Monta o JSON da seção 6.1 (sem os metadados id/convite/datas, que o modelo acrescenta). */
     public static function montar(array $f, array $arquivos = []): array
     {
@@ -264,13 +281,7 @@ class PrimeiraConsulta
         $num = fn ($v) => $t($v) === null ? null : (float) $v;
         $int = fn ($v) => $t($v) === null ? null : (int) $v;
         $gestante = $f['sexo'] === 'Feminino' && (bool) $f['gestante'];
-
-        $itens = fn (array $lista) => array_values(array_map(fn ($i) => [
-            'nome' => trim($i['nome']),
-            'dose' => $i['nao_informado'] ? null : $t($i['dose']),
-            'horario' => $i['nao_informado'] ? null : $t($i['horario']),
-            'nao_informado' => (bool) $i['nao_informado'],
-        ], array_filter($lista, fn ($i) => trim($i['nome'] ?? '') !== '')));
+        $itens = self::montarItens($f);
 
         return [
             'identificacao' => [
@@ -316,8 +327,8 @@ class PrimeiraConsulta
                 'sem_condicoes' => (bool) $f['sem_condicoes'],
                 'condicoes' => $f['sem_condicoes'] ? [] : array_values(array_intersect(self::CONDICOES, $f['condicoes'])),
                 'condicoes_outras' => trim((string) $f['condicoes_outras']),
-                'medicamentos' => ['nao_toma' => (bool) $f['medicamentos_nao_toma'], 'lista' => $f['medicamentos_nao_toma'] ? [] : $itens($f['medicamentos'])],
-                'suplementos' => ['nao_usa' => (bool) $f['suplementos_nao_usa'], 'lista' => $f['suplementos_nao_usa'] ? [] : $itens($f['suplementos'])],
+                'medicamentos' => $itens['medicamentos'],
+                'suplementos' => $itens['suplementos'],
                 'historico_familiar_nao_tem' => $f['historico_familiar_situacao'] === 'nao_tem',
                 'historico_familiar_nao_sabe' => $f['historico_familiar_situacao'] === 'nao_sabe',
                 'historico_familiar' => $f['historico_familiar_situacao'] === 'tem' ? array_values(array_intersect(self::HISTORICO_FAMILIAR, $f['historico_familiar'])) : [],
