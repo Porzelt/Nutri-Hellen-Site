@@ -32,7 +32,9 @@
         </button>
         
         <p class="text-xs text-center text-gray-500 mt-4">
-            🔒 Seus dados estão seguros. Não enviamos spam.
+            🔒 Seus dados estão seguros. Não enviamos spam.<br>
+            Ao enviar, você concorda com o uso dos seus dados para o contato, conforme a
+            <a href="{{ route('privacidade') }}" class="underline hover:text-gray-700">política de privacidade</a>.
         </p>
     </form>
 </div>

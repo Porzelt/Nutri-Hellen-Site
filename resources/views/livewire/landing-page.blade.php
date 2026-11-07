@@ -108,6 +108,7 @@
         <div class="container mx-auto px-6 ">
             <p class="font-medium">&copy; {{ date('Y') }} Nutri Hellen. Todos os direitos reservados.</p>
             <p class="mt-2 text-gray-400">Desenvolvido com 🖤 por Henrique Porzelt</p>
+            <p class="mt-2"><a href="{{ route('privacidade') }}" class="text-gray-400 underline hover:text-white">Política de privacidade</a></p>
 
             <div class="mt-8 border-t border-gray-700 pt-8 flex justify-center">
                 @auth

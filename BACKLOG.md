@@ -23,7 +23,9 @@ Pendências do site, em ordem de execução. Marcar `[x]` ao concluir. Repositó
 - [ ] Antes de publicar a anamnese: armazenamento persistente no Coolify para `/var/www/html/storage/app/private` (sem isso, cada deploy apaga anexos ainda não importados)
 - [x] Etapa 4: formulário de retorno (5 etapas, JSON da seção 6.3)
 - [x] Etapa 5: API v1 com token (`php artisan anamnese:token`; no Coolify vai só o hash em `ANAMNESE_API_TOKEN_HASH`)
-- [ ] Etapa 6: limpeza agendada (exige tarefa agendada no Coolify) e política de privacidade
+- [x] Etapa 6: limpeza (`php artisan anamnese:limpar`) e política de privacidade (`/privacidade`, ainda RASCUNHO)
+- [ ] Antes de publicar a anamnese: tarefa agendada no Coolify rodando `php artisan anamnese:limpar` uma vez por dia
+- [ ] Antes de publicar a anamnese: Hellen aprovar os textos do consentimento e da política (`config/consentimento.php`, `resources/views/privacidade.blade.php`) e mudar `rascunho` para `false`
 - [ ] Teste de ponta a ponta com o app local antes de publicar
 
 ## Site público e divulgação (sugestões da sessão do Instagram, 2026-11-07)
@@ -32,8 +34,8 @@ Ordem: primeiro o que é obrigatório (CFN e LGPD), depois o que faz ser encontr
 
 ### Obrigatório
 - [ ] Mostrar o registro profissional (CRN-3) no topo/rodapé da landing e no cabeçalho do formulário de anamnese. Já existe `MARCA_REGISTRO`: preencher no Coolify e exibir na landing
-- [ ] Política de privacidade (página `/privacidade`) cobrindo a landing, o formulário de agendamento e a anamnese. Junta com a etapa 6 da anamnese
-- [ ] Formulário de agendamento: linha de consentimento ("Ao enviar, você concorda com a política de privacidade") com link
+- [x] Política de privacidade (página `/privacidade`) cobrindo a landing, o formulário de agendamento e a anamnese (texto ainda RASCUNHO)
+- [x] Formulário de agendamento: linha de consentimento com link para a política
 - [ ] Analytics e Pixel só com aviso/consentimento de cookies (LGPD). Nunca nas páginas da anamnese (CSP já bloqueia scripts de terceiros lá)
 
 ### Ser encontrada

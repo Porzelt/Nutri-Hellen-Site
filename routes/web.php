@@ -12,6 +12,8 @@ Route::get('/', LandingPage::class)->name('home');
 
 Route::get('/login', LoginForm::class)->name('login');
 
+Route::view('/privacidade', 'privacidade')->name('privacidade');
+
 // Página do paciente (anamnese). O token tem 48 caracteres aleatórios.
 Route::get('/anamnese/{token}', Formulario::class)
     ->where('token', '[A-Za-z0-9]{40,64}')

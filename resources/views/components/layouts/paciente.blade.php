@@ -26,6 +26,7 @@
 
     <footer class="max-w-xl mx-auto px-4 pb-8 text-center text-xs text-gray-500">
         Seus dados são protegidos e usados só para o seu atendimento.
+        <a href="{{ route('privacidade') }}" target="_blank" rel="noopener" class="underline">Política de privacidade</a>
     </footer>
 </body>
 </html>
