@@ -4,12 +4,8 @@
     <main class="max-w-3xl mx-auto px-6 py-12">
         <a href="{{ route('home') }}" class="text-sm text-brand-secondary hover:underline">&larr; Voltar ao site</a>
 
-        @if (config('consentimento.rascunho'))
-            <p class="mt-6 rounded-lg bg-yellow-100 text-yellow-900 text-sm font-bold px-4 py-3">RASCUNHO: texto ainda não aprovado pela nutricionista.</p>
-        @endif
-
         <h1 class="mt-6 text-3xl font-bold text-gray-800">Política de privacidade</h1>
-        <p class="mt-2 text-sm text-gray-500">Versão {{ config('consentimento.versao') }}</p>
+        <p class="mt-2 text-sm text-gray-500">Versão 2026-11-13 (aprovada pela nutricionista)</p>
 
         <div class="mt-8 space-y-8 text-gray-700 leading-relaxed">
             <section>

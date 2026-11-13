@@ -39,6 +39,9 @@ class Formulario extends Component
 
     public bool $enviado = false;
 
+    #[Locked]
+    public string $primeiroNome = '';
+
     public array $f = [];
 
     /** Arquivos recém-escolhidos (temporários do Livewire), por categoria. */
@@ -178,6 +181,8 @@ class Formulario extends Component
             $convite->save();
         });
 
+        // Primeiro nome, só para o agradecimento (os dados saem da tela)
+        $this->primeiroNome = \Illuminate\Support\Str::of($this->f['nome'] ?? '')->trim()->before(' ')->title()->limit(40, '')->toString();
         $this->enviado = true;
         $this->conviteId = null;
         $this->f = [];

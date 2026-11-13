@@ -110,7 +110,8 @@ class AnamnesePacienteTest extends TestCase
         Carbon::setTestNow(Carbon::parse('2026-11-06 14:00:00'));
         $convite = Convite::criar('primeira', 'Maria');
 
-        $this->preencherTudo($this->abrir($convite))->assertSet('enviado', true)->assertSee('Recebemos suas respostas');
+        $this->preencherTudo($this->abrir($convite))->assertSet('enviado', true)->assertSee('Recebi suas respostas')
+            ->assertSee('Obrigada por preencher, Maria. Eu vou analisar tudo antes da sua consulta.');
 
         $resposta = Resposta::sole();
         $this->assertNotNull($resposta->enviado_em);

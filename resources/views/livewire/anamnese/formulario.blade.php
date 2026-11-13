@@ -22,8 +22,9 @@
     @elseif ($enviado)
         <div class="{{ $card }} text-center">
             <div class="text-5xl">✅</div>
-            <h1 class="text-xl font-bold text-gray-800">Recebemos suas respostas!</h1>
-            <p class="text-gray-600">Obrigada por preencher. A {{ $marca['nome'] }} vai analisar tudo antes da sua consulta. Você já pode fechar esta página.</p>
+            <h1 class="text-xl font-bold text-gray-800">Recebi suas respostas!</h1>
+            <p class="text-gray-600">Obrigada por preencher{{ $primeiroNome !== '' ? ', '.$primeiroNome : '' }}. Eu vou analisar tudo antes da sua consulta. Você já pode fechar esta página.</p>
+            <p class="text-sm font-semibold text-gray-700">{{ $marca['nome'] }}</p>
         </div>
 
 
