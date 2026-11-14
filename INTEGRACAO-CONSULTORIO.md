@@ -105,7 +105,7 @@ Convenções: datas em ISO (`AAAA-MM-DD`), números como número JSON, campos op
     "objetivo": "Emagrecimento",
     "metas_secundarias": {"nao_tem": false, "texto": "melhorar a disposição"}
   },
-  "atividade_fisica": {"nao_pratica": false, "lista": [{"tipo": "caminhada", "frequencia": "3x/semana", "duracao": "30 min"}]},
+  "atividade_fisica": {"nao_pratica": false, "lista": [{"tipo": "caminhada", "frequencia": "3x/semana", "duracao": "30 min", "horario": "10h às 11h20"}]},
   "sono_habitos": {
     "sono_horas": 7.0, "sono_horario": "00h às 07h", "sono_reparador": "Às vezes",
     "estresse": "Muito alto", "hidratacao": "1,5 L por dia", "intestino": "1 vez ao dia"
@@ -143,7 +143,7 @@ Convenções: datas em ISO (`AAAA-MM-DD`), números como número JSON, campos op
 - `gestante`: booleano. Se verdadeiro, `semanas_gestacao` (1 a 42) e `peso_pre_gestacional_kg` (30 a 250) são pedidos
 - `objetivo`: `Emagrecimento` | `Ganho de massa muscular` | `Reeducação alimentar` | `Controle de condição de saúde` | `Saúde na gestação` | texto livre quando o paciente escolhe "Outro"
 - `metas_secundarias`, `compulsao`, `observacoes`: cada um tem um indicador "não tem" (`nao_tem` / `sem_observacoes`) e o texto. Com o indicador verdadeiro, o texto não é pedido
-- `atividade_fisica.nao_pratica`: se verdadeiro, `lista` vem vazia. Cada item: `tipo`, `frequencia`, `duracao` (texto)
+- `atividade_fisica.nao_pratica`: se verdadeiro, `lista` vem vazia. Cada item: `tipo`, `frequencia`, `duracao`, `horario` (texto; `horario` a partir da 1.2, pode vir `null`)
 - `sono_horas`: de 0 a 16 (passo 0,5). `sono_reparador`: `Sim` | `Não` | `Às vezes`
 - `estresse`: `Baixo` | `Moderado` | `Alto` | `Muito alto`
 - `alergias` e `aversoes`: `resposta` `Não` | `Sim`. Com `Sim`, o `texto` descreve
@@ -280,3 +280,10 @@ Esclarecimentos de comportamento, sem mudar campos:
 - Download de arquivo: `Content-Disposition: attachment` com o nome original em `filename*` (UTF-8)
 - Limite padrão: 60 requisições por minuto, por IP e por token
 - O token é gerado no servidor com `php artisan anamnese:token`: o comando mostra o token (vai só para o app local) e o hash (vai para `ANAMNESE_API_TOKEN_HASH` no ambiente do servidor)
+
+### 4. Horário da atividade física (site, 2026-11-14, pedida pelo Henrique)
+
+Mudança compatível: só acrescenta um campo opcional. `versao_esquema` passa a `1.2`.
+
+- `atividade_fisica.lista[].horario` (texto livre, até 80 caracteres, ou `null`): quando o paciente costuma praticar, ex.: `10h às 11h20`. Serve para montar os horários das refeições
+- Para o app local: tratar a ausência do campo (respostas 1.0 e 1.1) como `null`

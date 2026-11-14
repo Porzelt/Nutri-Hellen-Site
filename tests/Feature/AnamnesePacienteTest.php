@@ -36,7 +36,7 @@ class AnamnesePacienteTest extends TestCase
             1 => ['nome' => 'Maria da Silva', 'nascimento' => '1990-05-20', 'sexo' => 'Feminino', 'altura_cm' => '164', 'peso_kg' => '82,0',
                 'gestante' => true, 'semanas_gestacao' => '14', 'peso_pre_gestacional_kg' => '84'],
             2 => ['profissao' => 'Auxiliar administrativo', 'horario_trabalho' => 'Seg a sex, 8h às 18h', 'objetivo' => 'Emagrecimento',
-                'metas_texto' => 'melhorar a disposição', 'atividades' => [['tipo' => 'caminhada', 'frequencia' => '3x/semana', 'duracao' => '30 min']]],
+                'metas_texto' => 'melhorar a disposição', 'atividades' => [['tipo' => 'caminhada', 'frequencia' => '3x/semana', 'duracao' => '30 min', 'horario' => '10h às 11h20']]],
             3 => ['sono_horas' => '7', 'sono_horario' => '00h às 07h', 'sono_reparador' => 'Às vezes', 'estresse' => 'Muito alto',
                 'hidratacao' => '1 a 2 litros', 'intestino' => '1 vez ao dia'],
             4 => ['alergias' => 'Não', 'padrao_alimentar' => 'Onívoro', 'aversoes' => 'Sim', 'aversoes_texto' => 'jiló e melão',
@@ -126,7 +126,7 @@ class AnamnesePacienteTest extends TestCase
             'altura_cm' => 164, 'peso_kg' => 82.0, 'gestante' => true, 'semanas_gestacao' => 14, 'peso_pre_gestacional_kg' => 84.0,
         ], $d['identificacao']);
         $this->assertSame(['nao_tem' => false, 'texto' => 'melhorar a disposição'], $d['rotina']['metas_secundarias']);
-        $this->assertSame([['tipo' => 'caminhada', 'frequencia' => '3x/semana', 'duracao' => '30 min']], $d['atividade_fisica']['lista']);
+        $this->assertSame([['tipo' => 'caminhada', 'frequencia' => '3x/semana', 'duracao' => '30 min', 'horario' => '10h às 11h20']], $d['atividade_fisica']['lista']);
         $this->assertEquals(7, $d['sono_habitos']['sono_horas']);
         $this->assertSame(['resposta' => 'Não', 'texto' => null], $d['alimentacao']['alergias']);
         $this->assertSame(['resposta' => 'Sim', 'texto' => 'jiló e melão'], $d['alimentacao']['aversoes']);

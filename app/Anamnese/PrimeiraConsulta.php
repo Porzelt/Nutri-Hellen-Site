@@ -56,6 +56,7 @@ class PrimeiraConsulta
         'alergias' => 'Ex.: lactose, glúten, frutos do mar, amendoim.',
         'condicoes' => 'Marque só o que um médico já confirmou.',
         'historico_familiar' => 'Pais, irmãos e avós.',
+        'atividade_horario' => 'O horário em que costuma treinar ajuda a montar os horários das refeições.',
         'bio' => 'Exame que mede gordura, músculo e água do corpo (aquela balança com eletrodos).',
         'sono_horas' => 'Use números como 7 ou 7,5.',
     ];
@@ -105,7 +106,7 @@ class PrimeiraConsulta
 
     public static function linhaAtividade(): array
     {
-        return ['tipo' => '', 'frequencia' => '', 'duracao' => ''];
+        return ['tipo' => '', 'frequencia' => '', 'duracao' => '', 'horario' => ''];
     }
 
     public static function linhaItem(): array
@@ -144,6 +145,7 @@ class PrimeiraConsulta
                 'f.atividades.*.tipo' => ['required', 'string', 'max:80'],
                 'f.atividades.*.frequencia' => ['nullable', 'string', 'max:80'],
                 'f.atividades.*.duracao' => ['nullable', 'string', 'max:80'],
+                'f.atividades.*.horario' => ['nullable', 'string', 'max:80'],
             ]),
 
             3 => [
@@ -305,6 +307,7 @@ class PrimeiraConsulta
                 'nao_pratica' => (bool) $f['atividade_nao_pratica'],
                 'lista' => $f['atividade_nao_pratica'] ? [] : array_values(array_map(fn ($a) => [
                     'tipo' => trim($a['tipo']), 'frequencia' => $t($a['frequencia']), 'duracao' => $t($a['duracao']),
+                    'horario' => $t($a['horario'] ?? ''),
                 ], array_filter($f['atividades'], fn ($a) => trim($a['tipo'] ?? '') !== ''))),
             ],
             'sono_habitos' => [

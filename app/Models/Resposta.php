@@ -15,7 +15,7 @@ class Resposta extends Model
 {
     use HasUuids;
 
-    public const VERSAO_ESQUEMA = '1.1';
+    public const VERSAO_ESQUEMA = '1.2';
 
     protected $table = 'respostas';
 
