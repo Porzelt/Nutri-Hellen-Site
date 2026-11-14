@@ -1,2 +1,7 @@
 User-agent: *
-Disallow:
+Disallow: /dashboard
+Disallow: /login
+Disallow: /anamnese/
+Disallow: /api/
+
+Sitemap: https://nutrihellenfatima.com.br/sitemap.xml

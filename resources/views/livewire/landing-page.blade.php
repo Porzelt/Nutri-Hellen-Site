@@ -1,4 +1,35 @@
 <div class="bg-brand-light min-h-screen">
+    @php
+        $m = config('marca');
+        $dadosEstruturados = [
+            '@context' => 'https://schema.org',
+            '@type' => 'Dietitian',
+            'name' => $m['titulo'].' '.$m['nome'],
+            'description' => 'Nutrição para a vida real: emagrecimento, diabetes, SOP e gestação, com comida de verdade. Atendimento '.$m['atendimento'].'.',
+            'url' => url('/'),
+            'image' => url('/img/compartilhar.jpg'),
+            'logo' => url($m['logo']),
+            'telephone' => '+'.$m['whatsapp'],
+            'address' => [
+                '@type' => 'PostalAddress',
+                'addressLocality' => $m['cidade'],
+                'addressRegion' => 'SP',
+                'addressCountry' => 'BR',
+            ],
+            'areaServed' => [
+                ['@type' => 'Place', 'name' => $m['bairro'].', '.$m['cidade']],
+                ['@type' => 'Country', 'name' => 'Brasil'],
+            ],
+            'availableService' => [
+                ['@type' => 'MedicalTherapy', 'name' => 'Consulta nutricional presencial'],
+                ['@type' => 'MedicalTherapy', 'name' => 'Consulta nutricional online'],
+            ],
+            'identifier' => ['@type' => 'PropertyValue', 'name' => 'Registro profissional', 'value' => $m['registro']],
+            'sameAs' => ['https://www.instagram.com/'.$m['instagram'].'/'],
+        ];
+    @endphp
+    <script type="application/ld+json">@json($dadosEstruturados, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES)</script>
+
     <section class="relative py-20 lg:py-32 overflow-hidden">
         <div class="container mx-auto px-6 flex flex-col-reverse lg:flex-row items-center gap-12">
             <div class="lg:w-1/2 text-center lg:text-left">
@@ -27,7 +58,7 @@
                         src="/img/logo-hellen.webp"
                         width="2000" height="748"
                         fetchpriority="high"
-                        alt="Nutricionista Hellen">
+                        alt="Logo Hellen Fátima Nutricionista">
                 </div>
             </div>
         </div>
@@ -42,7 +73,7 @@
                     <img src="/img/sobre-hellen.webp"
                         width="960" height="805"
                         loading="lazy" decoding="async"
-                        alt="Nutricionista Hellen sorrindo no consultório"
+                        alt="Nutricionista Hellen Fátima sorrindo no consultório na Parada Inglesa, São Paulo"
                         class="rounded-2xl shadow-lg w-full h-auto object-cover transform hover:scale-[1.02] transition duration-500">
                 </div>
             </div>

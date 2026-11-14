@@ -43,9 +43,9 @@ Ordem: primeiro o que é obrigatório (CFN e LGPD), depois o que faz ser encontr
 ### Ser encontrada
 - [x] Dizer onde atende: "São Paulo · presencial e online" (hero e rodapé), com o bairro (configurável por ambiente)
 - [x] Link do Instagram no rodapé (configurável: `MARCA_INSTAGRAM`)
-- [ ] SEO básico: `<title>` e `meta description` com "nutricionista em São Paulo · emagrecimento · online", `alt` descritivo nas imagens
-- [ ] Dados estruturados (schema.org `Dietitian`/`LocalBusiness`) com nome, CRN, cidade/bairro, área de atendimento online, Instagram e WhatsApp
-- [ ] Imagem de compartilhamento (Open Graph/Twitter Card) para a prévia no WhatsApp: imagem 1200x630 com logo e chamada
+- [x] SEO básico: `<title>` e `meta description` com "nutricionista em São Paulo · emagrecimento · online", `alt` descritivo nas imagens
+- [x] Dados estruturados (schema.org `Dietitian`/`LocalBusiness`) com nome, CRN, cidade/bairro, área de atendimento online, Instagram e WhatsApp
+- [x] Imagem de compartilhamento (Open Graph/Twitter Card) para a prévia no WhatsApp: imagem 1200x630 com logo e chamada
 - [ ] Perfil da Empresa no Google (Henrique/Hellen, fora do site): linkar o site; o site cita o mesmo bairro
 
 ### Converter

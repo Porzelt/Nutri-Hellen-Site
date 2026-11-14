@@ -1,5 +1,6 @@
 <x-layouts.app>
     <x-slot:title>Política de privacidade | {{ config('marca.titulo') }} {{ config('marca.nome') }}</x-slot:title>
+    <x-slot:description>Como {{ config('marca.titulo') }} {{ config('marca.nome') }} trata os dados do agendamento e do formulário de anamnese, conforme a LGPD.</x-slot:description>
 
     <main class="max-w-3xl mx-auto px-6 py-12">
         <a href="{{ route('home') }}" class="text-sm text-brand-secondary hover:underline">&larr; Voltar ao site</a>
