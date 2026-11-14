@@ -189,6 +189,8 @@
                                             <input type="text" placeholder="Frequência (3x/semana)" wire:model="f.atividades.{{ $i }}.frequencia" class="{{ $input }}">
                                             <input type="text" placeholder="Duração (30 min)" wire:model="f.atividades.{{ $i }}.duracao" class="{{ $input }}">
                                         </div>
+                                        <input type="text" placeholder="Horário (ex.: 10h às 11h20)" wire:model="f.atividades.{{ $i }}.horario" class="{{ $input }}">
+                                        @if ($i === 0)<p class="text-xs text-gray-500">{{ \App\Anamnese\PrimeiraConsulta::DICAS['atividade_horario'] }}</p>@endif
                                         @if (count($f['atividades']) > 1)
                                             <button type="button" wire:click="removerLinha('atividades', {{ $i }})" class="text-sm text-red-600">Remover</button>
                                         @endif

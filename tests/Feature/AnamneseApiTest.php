@@ -82,7 +82,7 @@ class AnamneseApiTest extends TestCase
 
     public function test_saude(): void
     {
-        $this->api()->getJson('/api/v1/saude')->assertOk()->assertExactJson(['ok' => true, 'versao_esquema' => '1.1']);
+        $this->api()->getJson('/api/v1/saude')->assertOk()->assertExactJson(['ok' => true, 'versao_esquema' => '1.2']);
     }
 
     public function test_cria_convite_pela_api_e_ele_aparece_no_painel(): void
@@ -155,7 +155,7 @@ class AnamneseApiTest extends TestCase
                 'identificacao', 'rotina', 'atividade_fisica', 'sono_habitos', 'alimentacao', 'saude', 'observacoes', 'arquivos'],
             array_keys($json)
         );
-        $this->assertSame('1.1', $json['versao_esquema']);
+        $this->assertSame('1.2', $json['versao_esquema']);
         $this->assertSame('maria-da-silva', $json['paciente_ref']);
         $this->assertTrue($json['consentimento']['aceito']);
         $this->assertSame('2026-11-06', $json['consentimento']['texto_versao']);

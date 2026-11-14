@@ -4,6 +4,9 @@ Pendências do site, em ordem de execução. Marcar `[x]` ao concluir. Repositó
 
 ## Infraestrutura (Coolify / VPS)
 - [x] Backup diário do banco no Coolify, retenção de 7 dias (alinhado à retenção do contrato)
+- [x] Cópia externa do backup no Cloudflare R2 (bucket próprio, chave restrita ao bucket, 7 cópias / 7 dias no Coolify + regra de expiração de 7 dias no R2). Anexos não entram no backup de propósito (vivem até 7 dias e a cópia definitiva fica no app)
+- [x] Guardar a `APP_KEY` de produção no gerenciador de senhas (sem ela, os dados criptografados de um backup não podem ser lidos) (Henrique)
+- [ ] Não ligar o backup automático da droplet na DigitalOcean (retém 4 semanas, acima dos 7 dias do contrato)
 - [x] Ligar OPcache (`PHP_OPCACHE_ENABLE=1`) e redeploy
 - [x] Ligar `AUTORUN_ENABLED=true` (optimize + migrate a cada deploy) e redeploy
 - [x] Firewall da VPS na DigitalOcean: liberar só SSH, HTTP e HTTPS (Henrique)
@@ -27,7 +30,7 @@ Pendências do site, em ordem de execução. Marcar `[x]` ao concluir. Repositó
 - [x] Antes de publicar a anamnese: tarefa agendada no Coolify (06:30 UTC) rodando `php artisan anamnese:limpar` uma vez por dia
 - [x] Hellen aprovou o consentimento e a política de privacidade (2026-11-13)
 - [x] Publicado em produção (PR #4, 2026-11-14): migrations ok, volume e tarefa aplicados, API fechada até configurar o token
-- [ ] Gerar o token (`php artisan anamnese:token`): hash em `ANAMNESE_API_TOKEN_HASH` no Coolify, token só no app local
+- [x] Token gerado (fica na pasta `.nutri-hellen` do usuário no Windows, fora dos repositórios) e hash ativo em produção (2026-11-14)
 - [ ] Teste de ponta a ponta com o app local (depende do importador do Consultório Nutri) antes de enviar convites a pacientes reais
 
 ## Site público e divulgação (sugestões da sessão do Instagram, 2026-11-07)
