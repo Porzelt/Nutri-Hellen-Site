@@ -11,6 +11,19 @@ class Lead extends Model
         'telefone',
         'data_preferencia',
         'observacoes',
-        'contatado'
+        'contatado',
+        'origem',
+        'meio',
+        'campanha',
     ];
+
+    /** Texto curto para o painel: "instagram / bio" ou "direto". */
+    public function origemLegivel(): string
+    {
+        if (! $this->origem) {
+            return 'direto';
+        }
+
+        return $this->origem.($this->meio ? ' / '.$this->meio : '').($this->campanha ? ' ('.$this->campanha.')' : '');
+    }
 }

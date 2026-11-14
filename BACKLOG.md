@@ -33,14 +33,14 @@ Pendências do site, em ordem de execução. Marcar `[x]` ao concluir. Repositó
 Ordem: primeiro o que é obrigatório (CFN e LGPD), depois o que faz ser encontrada, depois o que converte e mede. Antes de mostrar preço, promoção, depoimento ou "antes e depois", conferir o Código de Ética do CFN.
 
 ### Obrigatório
-- [ ] Mostrar o registro profissional (CRN-3) no topo/rodapé da landing e no cabeçalho do formulário de anamnese. Já existe `MARCA_REGISTRO`: preencher no Coolify e exibir na landing
+- [x] Mostrar o registro profissional (CRN-3) no topo/rodapé da landing e no cabeçalho do formulário de anamnese. Já existe `MARCA_REGISTRO`: preencher no Coolify e exibir na landing
 - [x] Política de privacidade (página `/privacidade`) cobrindo a landing, o formulário de agendamento e a anamnese (texto ainda RASCUNHO)
 - [x] Formulário de agendamento: linha de consentimento com link para a política
 - [ ] Analytics e Pixel só com aviso/consentimento de cookies (LGPD). Nunca nas páginas da anamnese (CSP já bloqueia scripts de terceiros lá)
 
 ### Ser encontrada
-- [ ] Dizer onde atende: "São Paulo · presencial e online" (hero e rodapé), com o bairro (configurável por ambiente)
-- [ ] Link do Instagram no rodapé (configurável: `MARCA_INSTAGRAM`)
+- [x] Dizer onde atende: "São Paulo · presencial e online" (hero e rodapé), com o bairro (configurável por ambiente)
+- [x] Link do Instagram no rodapé (configurável: `MARCA_INSTAGRAM`)
 - [ ] SEO básico: `<title>` e `meta description` com "nutricionista em São Paulo · emagrecimento · online", `alt` descritivo nas imagens
 - [ ] Dados estruturados (schema.org `Dietitian`/`LocalBusiness`) com nome, CRN, cidade/bairro, área de atendimento online, Instagram e WhatsApp
 - [ ] Imagem de compartilhamento (Open Graph/Twitter Card) para a prévia no WhatsApp: imagem 1200x630 com logo e chamada
@@ -54,7 +54,7 @@ Ordem: primeiro o que é obrigatório (CFN e LGPD), depois o que faz ser encontr
 
 ### Medir e reaproveitar
 - [ ] Analytics com respeito à privacidade (preferir Plausible/Umami, sem cookies; GA4 exige banner de consentimento). Registrar o evento "agendamento enviado"
-- [ ] Guardar a origem (UTM) no lead do agendamento e mostrar no painel, para saber quantos agendamentos vêm do Instagram. Funciona mesmo sem analytics. Link da bio: `?utm_source=instagram&utm_medium=bio`
+- [x] Guardar a origem (UTM) no lead do agendamento e mostrar no painel, para saber quantos agendamentos vêm do Instagram. Funciona mesmo sem analytics. Link da bio: `?utm_source=instagram&utm_medium=bio`
 - [ ] Pixel da Meta (opcional, só depois do banner de cookies)
 - [ ] Blog simples: cada carrossel vira um artigo curto (avaliar depois do básico acima)
 
