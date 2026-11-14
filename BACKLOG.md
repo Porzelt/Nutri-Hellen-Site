@@ -20,13 +20,15 @@ Pendências do site, em ordem de execução. Marcar `[x]` ao concluir. Repositó
 - [x] Etapa 1: modelo de convite e criação pelo painel
 - [x] Etapa 2: página do paciente com consentimento e formulário de primeira consulta (texto do consentimento ainda RASCUNHO: aprovar com a Hellen antes de publicar)
 - [x] Etapa 3: uploads privados (arquivos criptografados em storage/app/private/anamnese)
-- [ ] Antes de publicar a anamnese: armazenamento persistente no Coolify para `/var/www/html/storage/app/private` (sem isso, cada deploy apaga anexos ainda não importados)
+- [x] Antes de publicar a anamnese: armazenamento persistente no Coolify para `/var/www/html/storage/app/private` (sem isso, cada deploy apaga anexos ainda não importados)
 - [x] Etapa 4: formulário de retorno (5 etapas, JSON da seção 6.3)
 - [x] Etapa 5: API v1 com token (`php artisan anamnese:token`; no Coolify vai só o hash em `ANAMNESE_API_TOKEN_HASH`)
 - [x] Etapa 6: limpeza (`php artisan anamnese:limpar`) e política de privacidade (`/privacidade`, ainda RASCUNHO)
-- [ ] Antes de publicar a anamnese: tarefa agendada no Coolify rodando `php artisan anamnese:limpar` uma vez por dia
+- [x] Antes de publicar a anamnese: tarefa agendada no Coolify (06:30 UTC) rodando `php artisan anamnese:limpar` uma vez por dia
 - [x] Hellen aprovou o consentimento e a política de privacidade (2026-11-13)
-- [ ] Teste de ponta a ponta com o app local antes de publicar
+- [x] Publicado em produção (PR #4, 2026-11-14): migrations ok, volume e tarefa aplicados, API fechada até configurar o token
+- [ ] Gerar o token (`php artisan anamnese:token`): hash em `ANAMNESE_API_TOKEN_HASH` no Coolify, token só no app local
+- [ ] Teste de ponta a ponta com o app local (depende do importador do Consultório Nutri) antes de enviar convites a pacientes reais
 
 ## Site público e divulgação (sugestões da sessão do Instagram, 2026-11-07)
 
@@ -41,9 +43,9 @@ Ordem: primeiro o que é obrigatório (CFN e LGPD), depois o que faz ser encontr
 ### Ser encontrada
 - [x] Dizer onde atende: "São Paulo · presencial e online" (hero e rodapé), com o bairro (configurável por ambiente)
 - [x] Link do Instagram no rodapé (configurável: `MARCA_INSTAGRAM`)
-- [ ] SEO básico: `<title>` e `meta description` com "nutricionista em São Paulo · emagrecimento · online", `alt` descritivo nas imagens
-- [ ] Dados estruturados (schema.org `Dietitian`/`LocalBusiness`) com nome, CRN, cidade/bairro, área de atendimento online, Instagram e WhatsApp
-- [ ] Imagem de compartilhamento (Open Graph/Twitter Card) para a prévia no WhatsApp: imagem 1200x630 com logo e chamada
+- [x] SEO básico: `<title>` e `meta description` com "nutricionista em São Paulo · emagrecimento · online", `alt` descritivo nas imagens
+- [x] Dados estruturados (schema.org `Dietitian`/`LocalBusiness`) com nome, CRN, cidade/bairro, área de atendimento online, Instagram e WhatsApp
+- [x] Imagem de compartilhamento (Open Graph/Twitter Card) para a prévia no WhatsApp: imagem 1200x630 com logo e chamada
 - [ ] Perfil da Empresa no Google (Henrique/Hellen, fora do site): linkar o site; o site cita o mesmo bairro
 
 ### Converter
