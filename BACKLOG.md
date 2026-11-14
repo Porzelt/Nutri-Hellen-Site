@@ -4,6 +4,9 @@ Pendências do site, em ordem de execução. Marcar `[x]` ao concluir. Repositó
 
 ## Infraestrutura (Coolify / VPS)
 - [x] Backup diário do banco no Coolify, retenção de 7 dias (alinhado à retenção do contrato)
+- [x] Cópia externa do backup no Cloudflare R2 (bucket próprio, chave restrita ao bucket, 7 cópias / 7 dias no Coolify + regra de expiração de 7 dias no R2). Anexos não entram no backup de propósito (vivem até 7 dias e a cópia definitiva fica no app)
+- [ ] Guardar a `APP_KEY` de produção no gerenciador de senhas (sem ela, os dados criptografados de um backup não podem ser lidos) (Henrique)
+- [ ] Não ligar o backup automático da droplet na DigitalOcean (retém 4 semanas, acima dos 7 dias do contrato)
 - [x] Ligar OPcache (`PHP_OPCACHE_ENABLE=1`) e redeploy
 - [x] Ligar `AUTORUN_ENABLED=true` (optimize + migrate a cada deploy) e redeploy
 - [x] Firewall da VPS na DigitalOcean: liberar só SSH, HTTP e HTTPS (Henrique)
