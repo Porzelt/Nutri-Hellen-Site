@@ -1,16 +1,5 @@
 <div class="min-h-screen bg-gray-100">
-    <nav class="bg-brand-secondary text-white shadow-lg">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex items-center justify-between h-16">
-                <div class="flex items-center">
-                    <span class="font-bold text-xl">Nutri Admin 🍐</span>
-                </div>
-                <button wire:click="logout" class="text-sm bg-red-600 hover:bg-red-700 px-3 py-1 rounded transition">
-                    Sair do Sistema
-                </button>
-            </div>
-        </div>
-    </nav>
+    @include('livewire.admin.partials.nav')
 
     <main class="max-w-7xl mx-auto py-10 px-4 sm:px-6 lg:px-8">
         
@@ -18,6 +7,7 @@
             <h1 class="text-3xl font-bold text-gray-800">Leads Recebidos</h1>
             <span class="bg-white px-4 py-2 rounded-lg shadow text-sm text-gray-500">
                 Total: <strong>{{ $leads->count() }}</strong> pacientes interessados
+                · do Instagram: <strong>{{ $leads->where('origem', 'instagram')->count() }}</strong>
             </span>
         </div>
 
@@ -29,6 +19,7 @@
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Paciente</th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Contato</th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Preferência</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Origem</th>
                         <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Ações</th>
                     </tr>
                 </thead>
@@ -54,6 +45,10 @@
                                 {{ $lead->data_preferencia }}
                             </td>
 
+                            <td class="px-6 py-4 whitespace-nowrap text-sm">
+                                <span class="rounded-full px-2 py-0.5 text-xs font-semibold {{ $lead->origem ? 'bg-purple-100 text-purple-800' : 'bg-gray-100 text-gray-600' }}">{{ $lead->origemLegivel() }}</span>
+                            </td>
+
                             <td class="px-6 py-4 whitespace-nowrap text-center">
                                 <button wire:click="toggleStatus({{ $lead->id }})" 
                                     class="text-xs font-bold px-3 py-1 rounded-full transition {{ $lead->contatado ? 'bg-green-100 text-green-800 hover:bg-green-200' : 'bg-yellow-100 text-yellow-800 hover:bg-yellow-200' }}">
@@ -63,7 +58,7 @@
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="5" class="px-6 py-12 text-center text-gray-500">
+                            <td colspan="6" class="px-6 py-12 text-center text-gray-500">
                                 Nenhum agendamento recebido ainda.
                             </td>
                         </tr>

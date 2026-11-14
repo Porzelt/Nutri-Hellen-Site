@@ -6,9 +6,16 @@
                     Emagreça e recupere sua saúde <span class="text-green-600">comendo comida de verdade.</span>
                 </h1>
 
-                <p class="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
+                <p class="text-xl text-gray-600 mb-4 max-w-2xl mx-auto">
                     Um plano alimentar desenhado para a sua rotina, sem dietas malucas e com acompanhamento próximo.
                 </p>
+
+                <div class="mb-8">
+                <p class="inline-flex items-center gap-2 rounded-full bg-white px-4 py-2 text-sm font-semibold text-gray-700 shadow-sm">
+                    <svg class="h-4 w-4 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a2 2 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                    {{ config('marca.bairro') }}, {{ config('marca.cidade') }} · {{ config('marca.atendimento') }}
+                </p>
+                </div>
 
                 <a href="#agendamento" class="bg-green-600 text-white px-8 py-4 rounded-full font-bold text-lg hover:bg-green-700 transition shadow-lg inline-block">
                     Quero Agendar Minha Avaliação
@@ -40,7 +47,8 @@
                 </div>
             </div>
             <div class="lg:w-1/2">
-                <h2 class="text-3xl font-bold text-gray-800 mb-4">Olá, sou a Hellen.</h2>
+                <h2 class="text-3xl font-bold text-gray-800 mb-1">Olá, sou a Hellen.</h2>
+                <p class="text-sm font-semibold text-green-700 mb-4">{{ config('marca.titulo') }} · {{ config('marca.registro') }}</p>
                 <div class="prose text-gray-600 leading-relaxed">
                     <p class="mb-4">
                         Eu acredito na <strong>Nutrição para a Vida Real</strong>. Sei que sua rotina é corrida e que comer bem precisa ser prático.
@@ -106,8 +114,18 @@
 
     <footer class="bg-gray-800 text-white py-10 text-center text-sm relative">
         <div class="container mx-auto px-6 ">
-            <p class="font-medium">&copy; {{ date('Y') }} Nutri Hellen. Todos os direitos reservados.</p>
+            <p class="font-medium">{{ config('marca.nome') }} · {{ config('marca.titulo') }} · {{ config('marca.registro') }}</p>
+            <p class="mt-1 text-gray-300">{{ config('marca.bairro') }}, {{ config('marca.cidade') }} · atendimento {{ config('marca.atendimento') }}</p>
+            <p class="mt-4">
+                <a href="https://www.instagram.com/{{ config('marca.instagram') }}/" target="_blank" rel="noopener"
+                    class="inline-flex items-center gap-2 font-semibold text-white hover:text-green-300">
+                    <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.2c3.2 0 3.6 0 4.8.1 1.2.1 1.8.2 2.2.4.6.2 1 .5 1.4.9.4.4.7.8.9 1.4.2.4.4 1 .4 2.2.1 1.3.1 1.6.1 4.8s0 3.6-.1 4.8c-.1 1.2-.2 1.8-.4 2.2-.2.6-.5 1-.9 1.4-.4.4-.8.7-1.4.9-.4.2-1 .4-2.2.4-1.3.1-1.6.1-4.8.1s-3.6 0-4.8-.1c-1.2-.1-1.8-.2-2.2-.4-.6-.2-1-.5-1.4-.9-.4-.4-.7-.8-.9-1.4-.2-.4-.4-1-.4-2.2-.1-1.3-.1-1.6-.1-4.8s0-3.6.1-4.8c.1-1.2.2-1.8.4-2.2.2-.6.5-1 .9-1.4.4-.4.8-.7 1.4-.9.4-.2 1-.4 2.2-.4 1.2-.1 1.6-.1 4.8-.1zm0 3.3a6.5 6.5 0 100 13 6.5 6.5 0 000-13zm0 2.2a4.3 4.3 0 110 8.6 4.3 4.3 0 010-8.6zm6.8-3.5a1.5 1.5 0 100 3 1.5 1.5 0 000-3z"/></svg>
+                    {{ '@'.config('marca.instagram') }}
+                </a>
+            </p>
+            <p class="mt-4 text-gray-400">&copy; {{ date('Y') }} {{ config('marca.nome') }}. Todos os direitos reservados.</p>
             <p class="mt-2 text-gray-400">Desenvolvido com 🖤 por Henrique Porzelt</p>
+            <p class="mt-2"><a href="{{ route('privacidade') }}" class="text-gray-400 underline hover:text-white">Política de privacidade</a></p>
 
             <div class="mt-8 border-t border-gray-700 pt-8 flex justify-center">
                 @auth

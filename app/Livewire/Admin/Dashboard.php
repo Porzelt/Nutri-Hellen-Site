@@ -2,12 +2,14 @@
 
 namespace App\Livewire\Admin;
 
+use App\Livewire\Admin\Concerns\SaiDoSistema;
 use App\Models\Lead;
-use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
 class Dashboard extends Component
 {
+    use SaiDoSistema;
+
     // Método para alternar o status (Contatado Sim/Não)
     public function toggleStatus($leadId)
     {
@@ -16,16 +18,6 @@ class Dashboard extends Component
             $lead->contatado = !$lead->contatado;
             $lead->save();
         }
-    }
-
-    // Método de Logout
-    public function logout()
-    {
-        Auth::logout();
-        session()->invalidate();
-        session()->regenerateToken();
-
-        return redirect()->route('login');
     }
 
     public function render()

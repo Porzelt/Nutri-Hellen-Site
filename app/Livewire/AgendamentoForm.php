@@ -13,6 +13,23 @@ class AgendamentoForm extends Component
     public $telefone = '';
     public $data_preferencia = '';
 
+    /** Origem do visitante (UTM do link), lida ao abrir a página e travada contra alteração. */
+    #[\Livewire\Attributes\Locked]
+    public ?array $utm = null;
+
+    public function mount(): void
+    {
+        $limpar = fn ($v, $max) => is_string($v) && trim($v) !== ''
+            ? \Illuminate\Support\Str::limit(\Illuminate\Support\Str::lower(preg_replace('/[^\pL\pN _.-]/u', '', trim($v))), $max, '')
+            : null;
+
+        $this->utm = [
+            'origem' => $limpar(request()->query('utm_source'), 50),
+            'meio' => $limpar(request()->query('utm_medium'), 50),
+            'campanha' => $limpar(request()->query('utm_campaign'), 80),
+        ];
+    }
+
     // Regras de validação simples
     protected $rules = [
         'nome' => 'required|min:3|max:100',
@@ -41,6 +58,9 @@ class AgendamentoForm extends Component
             'nome' => $this->nome,
             'telefone' => $this->telefone,
             'data_preferencia' => $this->data_preferencia,
+            'origem' => $this->utm['origem'] ?? null,
+            'meio' => $this->utm['meio'] ?? null,
+            'campanha' => $this->utm['campanha'] ?? null,
         ]);
 
         // 3. Gerar Link do WhatsApp

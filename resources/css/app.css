@@ -10,3 +10,6 @@
     /* Definindo a fonte padrão */
     --font-sans: 'Figtree', sans-serif;
 }
+[x-cloak] {
+    display: none !important;
+}
