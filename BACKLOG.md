@@ -27,7 +27,7 @@ Pendências do site, em ordem de execução. Marcar `[x]` ao concluir. Repositó
 - [x] Antes de publicar a anamnese: tarefa agendada no Coolify (06:30 UTC) rodando `php artisan anamnese:limpar` uma vez por dia
 - [x] Hellen aprovou o consentimento e a política de privacidade (2026-11-13)
 - [x] Publicado em produção (PR #4, 2026-11-14): migrations ok, volume e tarefa aplicados, API fechada até configurar o token
-- [x] Token gerado (fica em C:SERSHENRI.NUTRI-HELLEN, FORA DOS REPOSITÓRIOS) E HASH ATIVO EM PRODUÇÃO (2026-11-14)
+- [x] Token gerado (fica na pasta `.nutri-hellen` do usuário no Windows, fora dos repositórios) e hash ativo em produção (2026-11-14)
 - [ ] Teste de ponta a ponta com o app local (depende do importador do Consultório Nutri) antes de enviar convites a pacientes reais
 
 ## Site público e divulgação (sugestões da sessão do Instagram, 2026-11-07)
