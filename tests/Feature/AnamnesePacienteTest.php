@@ -87,7 +87,7 @@ class AnamnesePacienteTest extends TestCase
         $resposta = $this->get($convite->url())
             ->assertOk()
             ->assertSee('Antes de começar')
-            ->assertSee('RASCUNHO')
+            ->assertDontSee('RASCUNHO')
             ->assertSee('<meta name="robots" content="noindex, nofollow, noarchive">', false)
             ->assertHeader('Referrer-Policy', 'no-referrer')
             ->assertHeader('X-Content-Type-Options', 'nosniff');

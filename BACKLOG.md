@@ -25,7 +25,7 @@ Pendências do site, em ordem de execução. Marcar `[x]` ao concluir. Repositó
 - [x] Etapa 5: API v1 com token (`php artisan anamnese:token`; no Coolify vai só o hash em `ANAMNESE_API_TOKEN_HASH`)
 - [x] Etapa 6: limpeza (`php artisan anamnese:limpar`) e política de privacidade (`/privacidade`, ainda RASCUNHO)
 - [ ] Antes de publicar a anamnese: tarefa agendada no Coolify rodando `php artisan anamnese:limpar` uma vez por dia
-- [ ] Antes de publicar a anamnese: Hellen aprovar os textos do consentimento e da política (`config/consentimento.php`, `resources/views/privacidade.blade.php`) e mudar `rascunho` para `false`
+- [x] Hellen aprovou o consentimento e a política de privacidade (2026-11-13)
 - [ ] Teste de ponta a ponta com o app local antes de publicar
 
 ## Site público e divulgação (sugestões da sessão do Instagram, 2026-11-07)

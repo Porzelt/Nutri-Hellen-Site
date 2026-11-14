@@ -6,13 +6,13 @@
  * antes de entrar no ar. Ao mudar o texto, mude também a 'versao' (data AAAA-MM-DD):
  * cada resposta guarda a versão aceita.
  *
- * RASCUNHO: este texto ainda NÃO foi aprovado. Enquanto 'rascunho' for true,
- * a página mostra um aviso de rascunho.
+ * Aprovado pela nutricionista em 2026-11-13. Se o texto mudar, volte 'rascunho' para true
+ * até nova aprovação (a página mostra um aviso) e mude a 'versao'.
  */
 return [
     'versao' => '2026-11-06',
 
-    'rascunho' => true,
+    'rascunho' => false,
 
     'titulo' => 'Antes de começar',
 

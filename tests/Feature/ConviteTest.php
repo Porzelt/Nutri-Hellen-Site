@@ -39,6 +39,20 @@ class ConviteTest extends TestCase
         $this->assertNull(Convite::peloToken('token-que-nao-existe'));
     }
 
+    public function test_pasta_do_paciente_vira_formato_de_pasta(): void
+    {
+        $this->assertSame('fulano-2', Convite::criar('primeira', pacienteRef: 'fulano 2')->paciente_ref);
+        $this->assertSame('joao-conceicao-da-silva', Convite::criar('primeira', pacienteRef: '  João  Conceição da Silva ')->paciente_ref);
+        $this->assertSame('maria-da-silva', Convite::criar('primeira', pacienteRef: 'maria-da-silva')->paciente_ref);
+        $this->assertNull(Convite::criar('primeira', pacienteRef: '  ')->paciente_ref);
+
+        // Pela API também
+        config(['anamnese.api_token_hash' => hash('sha256', 'tok')]);
+        $id = $this->withHeader('Authorization', 'Bearer tok')
+            ->postJson('/api/v1/convites', ['tipo' => 'retorno', 'paciente_ref' => 'Ana Lúcia'])->json('id');
+        $this->assertSame('ana-lucia', Convite::find($id)->paciente_ref);
+    }
+
     public function test_dados_do_paciente_e_token_ficam_criptografados_no_banco(): void
     {
         $convite = Convite::criar('retorno', 'Maria da Silva', 'maria-da-silva');

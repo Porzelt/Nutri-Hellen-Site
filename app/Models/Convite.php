@@ -51,7 +51,7 @@ class Convite extends Model
         $convite = new self([
             'tipo' => $tipo,
             'nome_paciente' => filled($nomePaciente) ? trim($nomePaciente) : null,
-            'paciente_ref' => filled($pacienteRef) ? trim($pacienteRef) : null,
+            'paciente_ref' => self::formatoDePasta($pacienteRef),
             'expira_em' => Carbon::now(self::FUSO)->addDays($validadeDias)->endOfDay()->utc(),
         ]);
         $convite->token = $token;
@@ -70,6 +70,14 @@ class Convite extends Model
     public function resposta(): \Illuminate\Database\Eloquent\Relations\HasOne
     {
         return $this->hasOne(Resposta::class);
+    }
+
+    /** "Maria da Silva 2" -> "maria-da-silva-2": nome de pasta do app local (sem acento, espaço vira hífen). */
+    public static function formatoDePasta(?string $texto): ?string
+    {
+        $pasta = Str::slug((string) $texto, '-', 'pt_BR');
+
+        return $pasta !== '' ? $pasta : null;
     }
 
     public static function hashDoToken(string $token): string

@@ -34,8 +34,11 @@
 
                 <div class="md:col-span-3">
                     <label for="paciente_ref" class="block text-sm font-medium text-gray-700 mb-1">Pasta do paciente no app <span class="text-gray-400">(opcional, ex.: maria-da-silva)</span></label>
-                    <input id="paciente_ref" type="text" wire:model="paciente_ref" maxlength="120" autocomplete="off"
+                    <input id="paciente_ref" type="text" wire:model.live.debounce.400ms="paciente_ref" maxlength="120" autocomplete="off"
                         class="w-full rounded-lg border-gray-300 border px-3 py-2">
+                    @if (\App\Models\Convite::formatoDePasta($paciente_ref) && \App\Models\Convite::formatoDePasta($paciente_ref) !== trim($paciente_ref))
+                        <p class="text-xs text-gray-500 mt-1">Será salvo como: <span class="font-mono">{{ \App\Models\Convite::formatoDePasta($paciente_ref) }}</span></p>
+                    @endif
                     @error('paciente_ref') <p class="text-red-600 text-xs mt-1">{{ $message }}</p> @enderror
                 </div>
 
