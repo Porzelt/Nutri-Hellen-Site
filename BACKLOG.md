@@ -21,12 +21,12 @@ Pendências do site, em ordem de execução. Marcar `[x]` ao concluir. Repositó
 ## Anamnese (contrato `INTEGRACAO-CONSULTORIO.md` v1.0, plano aprovado)
 - [x] Registrar em "Mudanças propostas": `validade_dias` de 1 a 30
 - [x] Etapa 1: modelo de convite e criação pelo painel
-- [x] Etapa 2: página do paciente com consentimento e formulário de primeira consulta (texto do consentimento ainda RASCUNHO: aprovar com a Hellen antes de publicar)
+- [x] Etapa 2: página do paciente com consentimento e formulário de primeira consulta
 - [x] Etapa 3: uploads privados (arquivos criptografados em storage/app/private/anamnese)
 - [x] Antes de publicar a anamnese: armazenamento persistente no Coolify para `/var/www/html/storage/app/private` (sem isso, cada deploy apaga anexos ainda não importados)
 - [x] Etapa 4: formulário de retorno (5 etapas, JSON da seção 6.3)
 - [x] Etapa 5: API v1 com token (`php artisan anamnese:token`; no Coolify vai só o hash em `ANAMNESE_API_TOKEN_HASH`)
-- [x] Etapa 6: limpeza (`php artisan anamnese:limpar`) e política de privacidade (`/privacidade`, ainda RASCUNHO)
+- [x] Etapa 6: limpeza (`php artisan anamnese:limpar`) e política de privacidade (`/privacidade`)
 - [x] Antes de publicar a anamnese: tarefa agendada no Coolify (06:30 UTC) rodando `php artisan anamnese:limpar` uma vez por dia
 - [x] Hellen aprovou o consentimento e a política de privacidade (2026-11-13)
 - [x] Publicado em produção (PR #4, 2026-11-14): migrations ok, volume e tarefa aplicados, API fechada até configurar o token
@@ -39,7 +39,7 @@ Ordem: primeiro o que é obrigatório (CFN e LGPD), depois o que faz ser encontr
 
 ### Obrigatório
 - [x] Mostrar o registro profissional (CRN-3) no topo/rodapé da landing e no cabeçalho do formulário de anamnese. Já existe `MARCA_REGISTRO`: preencher no Coolify e exibir na landing
-- [x] Política de privacidade (página `/privacidade`) cobrindo a landing, o formulário de agendamento e a anamnese (texto ainda RASCUNHO)
+- [x] Política de privacidade (página `/privacidade`) cobrindo a landing, o formulário de agendamento e a anamnese
 - [x] Formulário de agendamento: linha de consentimento com link para a política
 - [ ] Analytics e Pixel só com aviso/consentimento de cookies (LGPD). Nunca nas páginas da anamnese (CSP já bloqueia scripts de terceiros lá)
 
